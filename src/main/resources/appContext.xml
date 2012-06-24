@@ -2,8 +2,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-           
-    <bean id="dispatcher" class="com.swkoan.gallows.service.OperationDispatcher"></bean>
+    
+    <!-- List of operations provided by this server. -->
+    <bean id="wmsGetCapabilitiesOp" class="com.swkoan.gallows.service.wms.ops.GetWMSCapabilitiesOp"/>
+    
+    <!-- List of exception handlers provided by this server. -->
+    <bean id="wmsXMLErrorHandler" class="com.swkoan.gallows.service.wms.errorhandler.XMLErrorHandler"/>
+    
+    <!-- The configuration of the dispatcher. -->
+    <bean id="dispatcher" class="com.swkoan.gallows.service.OperationDispatcher">
+        <property name="operations">
+            <list>
+                <ref bean="wmsGetCapabilitiesOp"/>
+            </list>
+        </property>
+    </bean>
+    
     <bean id="wmsServlet" class="com.swkoan.gallows.service.wms.MapServer">
         <constructor-arg>
             <ref bean="dispatcher"/>

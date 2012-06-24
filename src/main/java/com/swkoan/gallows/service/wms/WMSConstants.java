@@ -28,5 +28,6 @@ public interface WMSConstants {
     public static final String FEATURE_COUNT_PARAM = "FEATURE_COUNT";
     public static final String X_PARAM = "X";
     public static final String Y_PARAM = "Y";
+    public static final String GET_CAPABILITIES_OP = "GetCapabilities";
     
 }

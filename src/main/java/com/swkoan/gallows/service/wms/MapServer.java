@@ -42,7 +42,7 @@ public class MapServer {
             @QueryParam(WMSConstants.REQUEST_PARAM) String request,
             @QueryParam(WMSConstants.VERSION_PARAM) String version,
             @QueryParam(WMSConstants.FORMAT_PARAM) String format) {
-        Request wmsRequest = new WMSRequest(
+        Request wmsRequest = new WMSRequest(context.getAbsolutePath().toString(),
                 secContext.getUserPrincipal(), request, version, format);
         JAXRSResponseHandler responseHandler = new JAXRSResponseHandler();
         dispatcher.dispatch(wmsRequest, responseHandler);
