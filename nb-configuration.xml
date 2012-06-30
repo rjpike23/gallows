@@ -19,6 +19,7 @@ Any value defined here will override the pom.xml file value but is only applicab
     <spring-data xmlns="http://www.netbeans.org/ns/spring-data/1">
         <config-files>
             <config-file>src/main/resources/appContext.xml</config-file>
+            <config-file>src/test/resources/testAppContext.xml</config-file>
         </config-files>
         <config-file-groups/>
     </spring-data>
