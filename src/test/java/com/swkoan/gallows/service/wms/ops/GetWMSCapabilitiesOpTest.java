@@ -12,6 +12,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 /**
  *
  */
