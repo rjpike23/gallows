@@ -33,8 +33,7 @@ public class MapServer {
     }
 
     /**
-     * Retrieves representation of an instance of
-     * com.swkoan.gallows.servlet.MapServer
+     * 
      */
     @GET
     @Produces("application/xml")
