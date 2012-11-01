@@ -6,5 +6,8 @@
            
     <!-- List of operations provided by this server. -->
     <bean id="wmsGetCapabilitiesOp" class="com.swkoan.gallows.service.wms.ops.GetWMSCapabilitiesOp"/>
-
+    
+    <!-- The GallowsConfig object to be used for this server. -->
+    <bean id="gallowsConfig" class="com.swkoan.gallows.config.pojo.PojoGallowsConfig"/>
+    
 </beans>

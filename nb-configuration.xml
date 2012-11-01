@@ -20,6 +20,7 @@ Any value defined here will override the pom.xml file value but is only applicab
         <config-files>
             <config-file>src/main/resources/appContext.xml</config-file>
             <config-file>src/test/resources/testAppContext.xml</config-file>
+            <config-file>src/main/resources/pojoConfigContext.xml</config-file>
         </config-files>
         <config-file-groups/>
     </spring-data>

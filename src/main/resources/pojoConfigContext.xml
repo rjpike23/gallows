@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    <bean id="layerList" class="com.swkoan.gallows.config.pojo.LayerConfigContainer">
+        <property name="layerConfig">
+            <bean class="com.swkoan.gallows.config.pojo.PojoLayerConfig">
+                <property name="name">
+                    <value>com.swkoan.TestLayer</value>
+                </property>
+                <property name="title">
+                    <value>My Test Layer</value>
+                </property>
+            </bean>
+        </property>
+    </bean>
+</beans>

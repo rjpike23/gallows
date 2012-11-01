@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gallowsConfig>
+    <security>
+        <users></users>
+        <roles></roles>
+        <roleMappings></roleMappings>
+    </security>
+    <layers>
+        <layer>
+            <opengisAttributes>
+                <name></name>
+                <title></title>
+                <crs></crs>
+                <exGeographicBoundingBox></exGeographicBoundingBox>
+                <boundingBox></boundingBox>
+                <dimension></dimension>
+                <attribution></attribution>
+                <authorityURL></authorityURL>
+                <identifier></identifier>
+                <metadataURL></metadataURL>
+                <dataURL></dataURL>
+                <featureListURL></featureListURL>
+                <style></style>
+                <minScaleDenominator></minScaleDenominator>
+                <maxScaleDenominator></maxScaleDenominator>
+            </opengisAttributes>
+            <featureSource></featureSource>
+            <security>
+                <owner></owner>
+                <roles></roles>
+            </security>
+            <childLayers></childLayers>
+        </layer>
+    </layers>
+</gallowsConfig>

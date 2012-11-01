@@ -1,5 +1,8 @@
 package com.swkoan.gallows.service.wms.ops;
 
+import com.swkoan.gallows.config.ConfigStatus;
+import com.swkoan.gallows.config.GallowsConfig;
+import com.swkoan.gallows.config.LayerConfig;
 import com.swkoan.gallows.service.Operation;
 import com.swkoan.gallows.service.Request;
 import com.swkoan.gallows.service.ResponseHandler;
@@ -16,18 +19,18 @@ import org.springframework.context.ApplicationContextAware;
  *
  */
 public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware, WMSCapabilityProvider {
-    
-    private ApplicationContext ac;
+
+    private ApplicationContext springCtx;
 
     @Override
-    public void setApplicationContext(ApplicationContext ac) throws BeansException {
-        this.ac = ac;
+    public void setApplicationContext(ApplicationContext springCtx) throws BeansException {
+        this.springCtx = springCtx;
     }
 
     @Override
     public boolean handles(Request request) {
-        return (request instanceof WMSRequest) &&
-                WMSConstants.GET_CAPABILITIES_OP.equals(((WMSRequest) request).getRequest());
+        return (request instanceof WMSRequest)
+                && WMSConstants.GET_CAPABILITIES_OP.equals(((WMSRequest) request).getRequest());
     }
 
     @Override
@@ -39,7 +42,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
         handler.setResult(caps);
         handler.setResultMIMEType(wmsRequest.getFormat());
     }
-    
+
     private Service getServiceMetadata(WMSRequest request) {
         Service result = new Service();
         result.setName("WMS");
@@ -49,24 +52,43 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
         result.setOnlineResource(or);
         return result;
     }
-    
+
     private Capability getCapabilityMetadata() {
         Capability result = new Capability();
-        
+
         // Request types:
-        Map<String, WMSCapabilityProvider> capBeans = 
-                ac.getBeansOfType(WMSCapabilityProvider.class);
-        for(WMSCapabilityProvider provider: capBeans.values()) {
+        Map<String, WMSCapabilityProvider> capBeans =
+                springCtx.getBeansOfType(WMSCapabilityProvider.class);
+        for (WMSCapabilityProvider provider : capBeans.values()) {
             provider.provide(result);
         }
-        
+
         // Layers:
+        GallowsConfig gc = (GallowsConfig) springCtx.getBean("gallowsConfig");
+        if(gc.status().getCurrentState() != ConfigStatus.States.LOADED) {
+            gc.load();
+        }
+        LayerConfig layerCfg = gc.getLayerConfig();
+        Layer layerMD = getLayerMetadata(layerCfg);
+        result.setLayer(layerMD);
         return result;
+    }
+
+    private Layer getLayerMetadata(LayerConfig layerCfg) {
+        Layer layer = new Layer();
+        layerCfg.provideWMSCapabilitiesLayer(layer);
+        if(layerCfg.getChildren() != null) {
+            for (LayerConfig child : layerCfg.getChildren()) {
+                Layer childMd = getLayerMetadata(child);
+                layer.getLayer().add(childMd);
+            }
+        }
+        return layer;
     }
 
     @Override
     public void provide(Capability cap) {
-        if(cap.getRequest() == null) {
+        if (cap.getRequest() == null) {
             cap.setRequest(new net.opengis.wms.Request());
         }
         OperationType opType = new OperationType();
@@ -86,5 +108,4 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
         opType.getFormat().add("text/xml");
         cap.getRequest().setGetCapabilities(opType);
     }
-    
 }

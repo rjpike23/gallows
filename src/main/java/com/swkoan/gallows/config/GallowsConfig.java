@@ -13,5 +13,5 @@ public interface GallowsConfig {
     
     ConfigStatus status();
 
-    List<LayerConfig> getLayerConfigs();
+    LayerConfig getLayerConfig();
 }

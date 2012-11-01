@@ -1,10 +1,15 @@
 package com.swkoan.gallows.config;
 
-import com.swkoan.gallows.service.wms.WMSCapabilityProvider;
+import java.util.List;
+import net.opengis.wms.Layer;
 
 /**
  *
  */
-public interface LayerConfig extends WMSCapabilityProvider {
-
+public interface LayerConfig {
+    LayerConfig getParent();
+    
+    List<LayerConfig> getChildren();
+    
+    void provideWMSCapabilitiesLayer(Layer layer);
 }
