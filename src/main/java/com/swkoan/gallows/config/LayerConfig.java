@@ -1,7 +1,7 @@
 package com.swkoan.gallows.config;
 
 import java.util.List;
-import net.opengis.wms.Layer;
+import org.opengis.geometry.Envelope;
 
 /**
  *
@@ -10,6 +10,14 @@ public interface LayerConfig {
     LayerConfig getParent();
     
     List<LayerConfig> getChildren();
+
+    String getName();
     
-    void provideWMSCapabilitiesLayer(Layer layer);
+    String getTitle();
+
+    List<Envelope> getBoundingBox();
+
+    List<String> getCrs();
+
+    Envelope getExGeographicBoundingBox();
 }

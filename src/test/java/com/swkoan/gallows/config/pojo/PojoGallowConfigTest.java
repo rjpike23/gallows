@@ -34,7 +34,7 @@ public class PojoGallowConfigTest {
         PojoGallowsConfig gc = new PojoGallowsConfig();
         assertTrue(gc.status().getCurrentState() == ConfigStatus.States.INIT);
         try {
-            gc.getLayerConfig();
+            gc.getRootLayerConfig();
             fail("IllegalStateException should be thrown.");
         }
         catch(IllegalStateException e) {
@@ -48,6 +48,6 @@ public class PojoGallowConfigTest {
     public void testLayerConfigs() {
         PojoGallowsConfig gc = new PojoGallowsConfig();
         gc.load();
-        LayerConfig config = gc.getLayerConfig();
+        LayerConfig config = gc.getRootLayerConfig();
     }
 }

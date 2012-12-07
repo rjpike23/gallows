@@ -4,14 +4,40 @@
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     <bean id="layerList" class="com.swkoan.gallows.config.pojo.LayerConfigContainer">
-        <property name="layerConfig">
+        <property name="rootLayerConfig">
             <bean class="com.swkoan.gallows.config.pojo.PojoLayerConfig">
-                <property name="name">
+                <constructor-arg>
                     <value>com.swkoan.TestLayer</value>
-                </property>
-                <property name="title">
+                </constructor-arg>
+                <constructor-arg>
                     <value>My Test Layer</value>
-                </property>
+                </constructor-arg>
+                <constructor-arg>
+                    <list>
+                        <value>WKT1</value>
+                        <value>WKT2</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg>
+                    <bean class="com.swkoan.gallows.config.pojo.BoundingBox">
+                        <property name="lowerLeftLatitude">
+                            <value>1</value>
+                        </property>
+                        <property name="lowerLeftLongitude">
+                            <value>2</value>
+                        </property>
+                        <property name="upperRightLatitude">
+                            <value>3</value>
+                        </property>
+                        <property name="upperRightLongitude">
+                            <value>4</value>
+                        </property>
+                    </bean>
+                </constructor-arg>
+                <constructor-arg>
+                    <list>
+                    </list>
+                </constructor-arg>
             </bean>
         </property>
     </bean>
