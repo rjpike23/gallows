@@ -1,5 +1,6 @@
 package com.swkoan.gallows.config.pojo;
 
+import com.swkoan.gallows.config.DataSourceConfig;
 import com.swkoan.gallows.config.LayerConfig;
 import java.math.BigInteger;
 import java.net.URL;
@@ -53,7 +54,12 @@ public class PojoLayerConfig implements LayerConfig {
         this.name = name;
         this.title = title;
     }
-
+    
+    @Override
+    public DataSourceConfig getDataSourceConfig() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     @Override
     public LayerConfig getParent() {
         return parent;
