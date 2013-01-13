@@ -22,16 +22,15 @@
             <url>http://repo.springsource.org/release</url>
         </repository>
         <repository>
-            <url>http://download.java.net/maven/2/</url>
-            <id>restlib</id>
-            <layout>default</layout>
-            <name>Repository for library Library[restlib]</name>
-        </repository>
-        <repository>
             <url>http://repo1.maven.org/maven2/</url>
             <id>junit_4</id>
             <layout>default</layout>
             <name>Repository for library Library[junit_4]</name>
+        </repository>
+        <repository>
+            <id>osgeo</id>
+            <name>Open Source Geospatial Foundation Repository</name>
+            <url>http://download.osgeo.org/webdav/geotools/</url>
         </repository>
     </repositories>
     
@@ -139,6 +138,21 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>2.5.6.SEC03</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vividsolutions</groupId>
+            <artifactId>jts</artifactId>
+            <version>1.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opengis</groupId>
+            <artifactId>geoapi</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-geometry</artifactId>
+            <version>8.4</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>

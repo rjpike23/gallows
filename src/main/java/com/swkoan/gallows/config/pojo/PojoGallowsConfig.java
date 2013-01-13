@@ -18,7 +18,7 @@ public class PojoGallowsConfig implements GallowsConfig {
     public void load() {
         currentStatus.loadSuccess();
         ClassPathXmlApplicationContext configCtx = new ClassPathXmlApplicationContext("/pojoConfigContext.xml");
-        layerConfig = ((LayerConfigContainer) configCtx.getBean("layerList")).getLayerConfig();
+        layerConfig = ((LayerConfigContainer) configCtx.getBean("layerList")).getRootLayerConfig();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class PojoGallowsConfig implements GallowsConfig {
     }
 
     @Override
-    public LayerConfig getLayerConfig() {
+    public LayerConfig getRootLayerConfig() {
         if(currentStatus.getCurrentState()==ConfigStatus.States.INIT) {
             throw new IllegalStateException("Gallows configuration has not yet been loaded.");
         }

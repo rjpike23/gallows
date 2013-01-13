@@ -68,22 +68,15 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
         if(gc.status().getCurrentState() != ConfigStatus.States.LOADED) {
             gc.load();
         }
-        LayerConfig layerCfg = gc.getLayerConfig();
+        LayerConfig layerCfg = gc.getRootLayerConfig();
         Layer layerMD = getLayerMetadata(layerCfg);
         result.setLayer(layerMD);
         return result;
     }
 
     private Layer getLayerMetadata(LayerConfig layerCfg) {
-        Layer layer = new Layer();
-        layerCfg.provideWMSCapabilitiesLayer(layer);
-        if(layerCfg.getChildren() != null) {
-            for (LayerConfig child : layerCfg.getChildren()) {
-                Layer childMd = getLayerMetadata(child);
-                layer.getLayer().add(childMd);
-            }
-        }
-        return layer;
+        WMSLayerCapabilityProvider provider = new WMSLayerCapabilityProvider();
+        return provider.provide(layerCfg);
     }
 
     @Override

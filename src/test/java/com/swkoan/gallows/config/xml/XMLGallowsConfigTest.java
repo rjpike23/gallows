@@ -18,7 +18,7 @@ public class XMLGallowsConfigTest {
     public void testIllegalLoadState() {
         GallowsConfig gc = new XMLGallowsConfig();
         try {
-            gc.getLayerConfig();
+            gc.getRootLayerConfig();
             fail("Expected an IllegalStateException");
         }
         catch(IllegalStateException e) {
