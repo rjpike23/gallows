@@ -20,4 +20,6 @@ public interface LayerConfig {
     List<String> getCrs();
 
     Envelope getExGeographicBoundingBox();
+    
+    DataSourceConfig getDataSourceConfig();
 }

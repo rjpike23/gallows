@@ -1,4 +1,4 @@
-package com.swkoan.gallows.service.wms.ops;
+package com.swkoan.gallows.service.wms;
 
 import com.swkoan.gallows.config.LayerConfig;
 import net.opengis.wms.BoundingBox;

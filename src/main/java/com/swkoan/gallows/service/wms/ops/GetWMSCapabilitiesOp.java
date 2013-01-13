@@ -1,5 +1,6 @@
 package com.swkoan.gallows.service.wms.ops;
 
+import com.swkoan.gallows.service.wms.WMSLayerCapabilityProvider;
 import com.swkoan.gallows.config.ConfigStatus;
 import com.swkoan.gallows.config.GallowsConfig;
 import com.swkoan.gallows.config.LayerConfig;

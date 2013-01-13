@@ -2,6 +2,7 @@
 package com.swkoan.gallows.config.pojo;
 
 import com.swkoan.gallows.config.ConfigStatus;
+import com.swkoan.gallows.config.DataSourceConfig;
 import com.swkoan.gallows.config.GallowsConfig;
 import com.swkoan.gallows.config.LayerConfig;
 import java.util.List;
@@ -37,6 +38,11 @@ public class PojoGallowsConfig implements GallowsConfig {
             throw new IllegalStateException("Gallows configuration has not yet been loaded.");
         }
         return layerConfig;
+    }
+
+    @Override
+    public DataSourceConfig getDataSourceConfigs() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -14,4 +14,6 @@ public interface GallowsConfig {
     ConfigStatus status();
 
     LayerConfig getRootLayerConfig();
+    
+    DataSourceConfig getDataSourceConfigs();
 }
