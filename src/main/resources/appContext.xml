@@ -5,6 +5,7 @@
     
     <!-- List of operations provided by this server. -->
     <bean id="wmsGetCapabilitiesOp" class="com.swkoan.gallows.service.wms.ops.GetWMSCapabilitiesOp"/>
+    <bean id="wmsGetMapOp" class="com.swkoan.gallows.service.wms.ops.BufferedImageGetMapOp"/>
     
     <!-- List of exception handlers provided by this server. -->
     <bean id="wmsXMLErrorHandler" class="com.swkoan.gallows.service.wms.errorhandler.XMLErrorHandler"/>
@@ -17,6 +18,7 @@
         <property name="operations">
             <list>
                 <ref bean="wmsGetCapabilitiesOp"/>
+                <ref bean="wmsGetMapOp"/>
             </list>
         </property>
     </bean>

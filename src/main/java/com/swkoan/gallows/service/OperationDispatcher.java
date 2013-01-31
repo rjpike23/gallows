@@ -25,7 +25,7 @@ public class OperationDispatcher {
                         return;
                     }
                     catch(Exception e) {
-                        response.exceptionDuringDispatch(e);
+                        response.exceptionOnExecute(e);
                         return;
                     }
                 }

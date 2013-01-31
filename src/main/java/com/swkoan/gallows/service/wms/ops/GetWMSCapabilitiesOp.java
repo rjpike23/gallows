@@ -85,6 +85,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
         if (cap.getRequest() == null) {
             cap.setRequest(new net.opengis.wms.Request());
         }
+        // TODO: Check for existing operation type.
         OperationType opType = new OperationType();
         DCPType dcpType = new DCPType();
         HTTP http = new HTTP();

@@ -36,19 +36,18 @@ public class GetWMSCapabilitiesOpTest {
     public void testHandles() {
         Operation op = (Operation) appContext.getBean("wmsGetCapabilitiesOp");
         
-        WMSRequest request = new WMSRequest(null, null, "GetCapabilities", "1.3.0", "text/xml");
+        WMSRequest request = new WMSRequest(null, null, "GetCapabilities", "1.3.0", "text/xml", null);
         assertTrue(op.handles(request));
         
-        request = new WMSRequest(null, null, "NoMatch", "1.3.0", "text/xml");
+        request = new WMSRequest(null, null, "NoMatch", "1.3.0", "text/xml", null);
         assertFalse(op.handles(request));
     }
     
     @Test
     public void testExecute() {
-        
         Operation op = (Operation) appContext.getBean("wmsGetCapabilitiesOp");
         
-        WMSRequest request = new WMSRequest("http://testvalue.com/", null, "GetCapabilities", "1.3.0", "text/xml");
+        WMSRequest request = new WMSRequest("http://testvalue.com/", null, "GetCapabilities", "1.3.0", "text/xml", null);
         ResponseHandler handler = mock(ResponseHandler.class);
         op.execute(request, handler);
         

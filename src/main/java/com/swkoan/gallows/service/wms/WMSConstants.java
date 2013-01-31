@@ -29,5 +29,6 @@ public interface WMSConstants {
     public static final String X_PARAM = "X";
     public static final String Y_PARAM = "Y";
     public static final String GET_CAPABILITIES_OP = "GetCapabilities";
+    public static final String GET_MAP_OP = "GetMap";
     
 }

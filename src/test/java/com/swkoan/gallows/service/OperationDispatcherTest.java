@@ -106,7 +106,7 @@ public class OperationDispatcherTest {
             
             verify(op1).handles(request);
             verify(op1).execute(request, response);
-            verify(response).exceptionDuringDispatch(e);
+            verify(response).exceptionOnExecute(e);
         }
         catch(Exception e) {
             e.printStackTrace();

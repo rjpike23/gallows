@@ -7,12 +7,13 @@ import org.opengis.geometry.Envelope;
  *
  */
 public interface LayerConfig {
+
     LayerConfig getParent();
-    
+
     List<LayerConfig> getChildren();
 
     String getName();
-    
+
     String getTitle();
 
     List<Envelope> getBoundingBox();
@@ -20,6 +21,6 @@ public interface LayerConfig {
     List<String> getCrs();
 
     Envelope getExGeographicBoundingBox();
-    
+
     DataSourceConfig getDataSourceConfig();
 }

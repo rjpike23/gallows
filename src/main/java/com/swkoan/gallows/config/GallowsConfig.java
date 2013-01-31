@@ -15,5 +15,7 @@ public interface GallowsConfig {
 
     LayerConfig getRootLayerConfig();
     
+    LayerConfig getLayerConfig(String name);
+    
     DataSourceConfig getDataSourceConfigs();
 }

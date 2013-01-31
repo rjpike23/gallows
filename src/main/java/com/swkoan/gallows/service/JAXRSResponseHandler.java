@@ -28,7 +28,7 @@ public class JAXRSResponseHandler implements ResponseHandler {
     }
 
     @Override
-    public void exceptionDuringDispatch(Exception e) {
+    public void exceptionOnExecute(Exception e) {
         builder.status(Response.Status.INTERNAL_SERVER_ERROR);
     }
 }

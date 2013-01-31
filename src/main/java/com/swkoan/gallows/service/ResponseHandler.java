@@ -11,5 +11,5 @@ public interface ResponseHandler {
 
     void unableToDispatchRequest();
 
-    void exceptionDuringDispatch(Exception e);
+    void exceptionOnExecute(Exception e);
 }

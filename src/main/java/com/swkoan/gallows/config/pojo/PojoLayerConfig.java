@@ -13,30 +13,31 @@ import org.opengis.geometry.Envelope;
  */
 public class PojoLayerConfig implements LayerConfig {
 
+    private DataSourceConfig dataSourceConfig;
     private LayerConfig parent;
     private List<LayerConfig> children;
     private String name;
     private String title;
-    protected String layerAbstract;
-    protected List<String> keywordList;
-    protected List<String> crs;
-    protected BoundingBox exGeographicBoundingBox;
-    protected List<BoundingBox> boundingBox;
-    //protected List<Dimension> dimension;
-    //protected Attribution attribution;
-    protected List<URL> authorityURLs;
-    //protected List<Identifier> identifier;
-    protected List<URL> metadataURLs;
-    protected List<URL> dataURLs;
-    protected List<URL> featureListURLs;
-    protected Double minScaleDenominator;
-    protected Double maxScaleDenominator;
-    protected Boolean queryable;
-    protected BigInteger cascaded;
-    protected Boolean opaque;
-    protected Boolean noSubsets;
-    protected BigInteger fixedWidth;
-    protected BigInteger fixedHeight;
+    private String layerAbstract;
+    private List<String> keywordList;
+    private List<String> crs;
+    private BoundingBox exGeographicBoundingBox;
+    private List<BoundingBox> boundingBox;
+    //private List<Dimension> dimension;
+    //private Attribution attribution;
+    private List<URL> authorityURLs;
+    //private List<Identifier> identifier;
+    private List<URL> metadataURLs;
+    private List<URL> dataURLs;
+    private List<URL> featureListURLs;
+    private Double minScaleDenominator;
+    private Double maxScaleDenominator;
+    private Boolean queryable;
+    private BigInteger cascaded;
+    private Boolean opaque;
+    private Boolean noSubsets;
+    private BigInteger fixedWidth;
+    private BigInteger fixedHeight;
 
     public PojoLayerConfig() {
     }
@@ -57,7 +58,11 @@ public class PojoLayerConfig implements LayerConfig {
     
     @Override
     public DataSourceConfig getDataSourceConfig() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return dataSourceConfig;
+    }
+    
+    public void setDataSourceConfig(DataSourceConfig dsConfig) {
+        this.dataSourceConfig = dsConfig;
     }
     
     @Override
