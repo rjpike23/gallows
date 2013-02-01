@@ -3,9 +3,16 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
+    <!-- Renderers -->
+    <bean id="gtStreamingRenderer" class="com.swkoan.gallows.gt.render.GTStreamingRenderer"/>
+    
     <!-- List of operations provided by this server. -->
     <bean id="wmsGetCapabilitiesOp" class="com.swkoan.gallows.service.wms.ops.GetWMSCapabilitiesOp"/>
-    <bean id="wmsGetMapOp" class="com.swkoan.gallows.service.wms.ops.BufferedImageGetMapOp"/>
+    <bean id="wmsGetMapOp" class="com.swkoan.gallows.service.wms.ops.BufferedImageGetMapOp">
+        <constructor-arg>
+            <ref bean="gtStreamingRenderer"/>
+        </constructor-arg>
+    </bean>
     
     <!-- List of exception handlers provided by this server. -->
     <bean id="wmsXMLErrorHandler" class="com.swkoan.gallows.service.wms.errorhandler.XMLErrorHandler"/>

@@ -1,5 +1,6 @@
 package com.swkoan.gallows.service.wms.ops;
 
+import com.swkoan.gallows.config.LayerConfig;
 import com.swkoan.gallows.data.MapDescription;
 import com.swkoan.gallows.render.Renderer;
 import com.swkoan.gallows.service.Operation;
@@ -10,8 +11,11 @@ import com.swkoan.gallows.service.wms.WMSCapabilityProvider;
 import com.swkoan.gallows.service.wms.WMSConstants;
 import com.swkoan.gallows.service.wms.WMSRequest;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.imageio.ImageIO;
@@ -23,6 +27,7 @@ import net.opengis.wms.HTTP;
 import net.opengis.wms.OnlineResource;
 import net.opengis.wms.OperationType;
 import net.opengis.wms.Post;
+import org.geotools.referencing.CRS;
 
 /**
  *
@@ -63,14 +68,29 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider {
 
     @Override
     public void execute(Request request, ResponseHandler handler) {
-        MapDescription mapDescription = null;
-        BufferedImage image = new BufferedImage(
-                (int) mapDescription.getImageDim().getWidth(),
-                (int) mapDescription.getImageDim().getHeight(),
-                BufferedImage.TYPE_4BYTE_ABGR);
-        renderer.render(mapDescription, ((Graphics2D) image.getGraphics()));
-        StreamingOutput output = new RenderedImageStreamingOutput(image, ((WMSRequest) request).getFormat());
-        handler.setResult(output);
+        try {
+            WMSRequest wmsRequest = (WMSRequest) request;
+            Rectangle mapSize = new Rectangle(wmsRequest.getWidth(), wmsRequest.getHeight());
+            List<LayerConfig> layerConfigs = new ArrayList<LayerConfig>();
+            // TODO: using geotools CRS, this layer should not have dependencies
+            // on non-standards based libraries.
+            MapDescription mapDescription = new MapDescription(
+                    mapSize,
+                    layerConfigs,
+                    CRS.decode(wmsRequest.getCrs()), wmsRequest.getBbox());
+            BufferedImage image = new BufferedImage(
+                    (int) mapDescription.getImageDim().getWidth(),
+                    (int) mapDescription.getImageDim().getHeight(),
+                    BufferedImage.TYPE_4BYTE_ABGR);
+            renderer.render(mapDescription, ((Graphics2D) image.getGraphics()));
+            StreamingOutput output = new RenderedImageStreamingOutput(image, wmsRequest.getFormat());
+            handler.setResultMIMEType(wmsRequest.getFormat());
+            handler.setResult(output);
+        }
+        catch(Exception e) {
+            // TODO: what to do here?
+            e.printStackTrace();
+        }
     }
 
     @Override

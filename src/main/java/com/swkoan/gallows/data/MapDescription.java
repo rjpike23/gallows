@@ -15,6 +15,13 @@ public class MapDescription {
     private List<LayerConfig> layers;
     private CoordinateReferenceSystem crs;
     private Envelope boundingBox;
+    
+    public MapDescription(Rectangle imageDim, List<LayerConfig> layers, CoordinateReferenceSystem crs, Envelope boundingBox) {
+        this.imageDim = imageDim;
+        this.layers = layers;
+        this.crs = crs;
+        this.boundingBox = boundingBox;
+    }
 
     public Rectangle getImageDim() {
         return imageDim;

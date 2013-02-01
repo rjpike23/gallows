@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import javax.ws.rs.core.MultivaluedMap;
 import net.opengis.wms.BoundingBox;
+import org.geotools.geometry.Envelope2D;
+import org.opengis.geometry.Envelope;
 
 /**
  *
@@ -26,6 +28,7 @@ public class WMSRequest implements Request {
         this.request = request;
         this.version = version;
         this.format = format;
+        this.parameterMap = parameterMap;
     }
 
     public String getFormat() {
@@ -64,9 +67,9 @@ public class WMSRequest implements Request {
         return getParamValue(WMSConstants.SRS_PARAM);
     }
 
-    public BoundingBox getBbox() {
+    public Envelope getBbox() {
         String paramVal = getParamValue(WMSConstants.BBOX_PARAM);
-        BoundingBox bbox = null;
+        Envelope2D bbox = null;
         if(paramVal != null) {
             String[] strings = paramVal.split(",");
             if(strings.length == 4) {
@@ -74,11 +77,8 @@ public class WMSRequest implements Request {
                 for(int i = 0; i < 4; ++i) {
                     dvals[i] = Double.parseDouble(strings[i]);
                 }
-                bbox = new BoundingBox();
-                bbox.setMinx(dvals[0]);
-                bbox.setMiny(dvals[1]);
-                bbox.setMaxx(dvals[2]);
-                bbox.setMaxy(dvals[3]);
+                bbox = new Envelope2D();
+                bbox.setFrameFromDiagonal(dvals[0], dvals[1], dvals[2], dvals[3]);
             }
         }
         return bbox;

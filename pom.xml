@@ -13,9 +13,15 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
     
     <repositories>
+        <repository>
+            <id>osgeo</id>
+            <name>Open Source Geospatial Foundation Repository</name>
+            <url>http://download.osgeo.org/webdav/geotools/</url>
+        </repository>
         <repository>
             <id>springsource-repo</id>
             <name>SpringSource Repository</name>
@@ -26,11 +32,6 @@
             <id>junit_4</id>
             <layout>default</layout>
             <name>Repository for library Library[junit_4]</name>
-        </repository>
-        <repository>
-            <id>osgeo</id>
-            <name>Open Source Geospatial Foundation Repository</name>
-            <url>http://download.osgeo.org/webdav/geotools/</url>
         </repository>
     </repositories>
     
@@ -145,11 +146,6 @@
             <version>1.12</version>
         </dependency>
         <dependency>
-            <groupId>org.opengis</groupId>
-            <artifactId>geoapi</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.geotools</groupId>
             <artifactId>gt-geometry</artifactId>
             <version>8.4</version>
@@ -169,6 +165,21 @@
             <artifactId>gt-main</artifactId>
             <version>8.4</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-epsq-hsql</artifactId>
+            <version>8.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-opengis</artifactId>
+            <version>8.4</version>
+        </dependency>
+        <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.10</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
