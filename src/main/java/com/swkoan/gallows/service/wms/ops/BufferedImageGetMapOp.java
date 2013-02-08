@@ -1,5 +1,7 @@
 package com.swkoan.gallows.service.wms.ops;
 
+import com.swkoan.gallows.config.ConfigStatus;
+import com.swkoan.gallows.config.GallowsConfig;
 import com.swkoan.gallows.config.LayerConfig;
 import com.swkoan.gallows.data.MapDescription;
 import com.swkoan.gallows.render.Renderer;
@@ -28,11 +30,14 @@ import net.opengis.wms.OnlineResource;
 import net.opengis.wms.OperationType;
 import net.opengis.wms.Post;
 import org.geotools.referencing.CRS;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  *
  */
-public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider {
+public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, ApplicationContextAware {
 
     private static Set<String> supportedMimeTypes;
 
@@ -42,6 +47,7 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider {
         supportedMimeTypes.addAll(Arrays.asList(iioMimeTypes));
     }
     private Renderer renderer;
+    private ApplicationContext springCtx;
 
     public BufferedImageGetMapOp(Renderer renderer) {
         this.renderer = renderer;
@@ -71,7 +77,16 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider {
         try {
             WMSRequest wmsRequest = (WMSRequest) request;
             Rectangle mapSize = new Rectangle(wmsRequest.getWidth(), wmsRequest.getHeight());
+
+            GallowsConfig gc = (GallowsConfig) springCtx.getBean("gallowsConfig");
+            if (gc.status().getCurrentState() != ConfigStatus.States.LOADED) {
+                gc.load();
+            }
             List<LayerConfig> layerConfigs = new ArrayList<LayerConfig>();
+            for (String layerName : wmsRequest.getLayerNames()) {
+                layerConfigs.add(gc.getLayerConfig(layerName));
+            }
+            
             // TODO: using geotools CRS, this layer should not have dependencies
             // on non-standards based libraries.
             MapDescription mapDescription = new MapDescription(
@@ -83,11 +98,11 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider {
                     (int) mapDescription.getImageDim().getHeight(),
                     BufferedImage.TYPE_4BYTE_ABGR);
             renderer.render(mapDescription, ((Graphics2D) image.getGraphics()));
+
             StreamingOutput output = new RenderedImageStreamingOutput(image, wmsRequest.getFormat());
-            handler.setResultMIMEType(wmsRequest.getFormat());
             handler.setResult(output);
-        }
-        catch(Exception e) {
+            handler.setResultMIMEType(wmsRequest.getFormat());
+        } catch (Exception e) {
             // TODO: what to do here?
             e.printStackTrace();
         }
@@ -115,5 +130,10 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider {
             cap.getRequest().getGetMap().getDCPType().add(dcpType);
         }
         cap.getRequest().getGetMap().getFormat().addAll(supportedMimeTypes);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext ac) throws BeansException {
+        this.springCtx = ac;
     }
 }

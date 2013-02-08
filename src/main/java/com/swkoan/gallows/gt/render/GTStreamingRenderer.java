@@ -21,7 +21,8 @@ public class GTStreamingRenderer implements Renderer {
     @Override
     public void render(MapDescription map, Graphics2D graphics) {
         MapViewport mapViewport = new MapViewport();
-        mapViewport.setBounds(new ReferencedEnvelope(map.getBoundingBox()));
+        ReferencedEnvelope bbox = new ReferencedEnvelope(map.getBoundingBox());
+        mapViewport.setBounds(bbox);
         mapViewport.setScreenArea(map.getImageDim());
         
         MapContent mapContent = new MapContent();
@@ -39,5 +40,6 @@ public class GTStreamingRenderer implements Renderer {
         
         StreamingRenderer gtRenderer = new StreamingRenderer();
         gtRenderer.setMapContent(mapContent);
+        gtRenderer.paint(graphics, map.getImageDim(), bbox);
     }
 }

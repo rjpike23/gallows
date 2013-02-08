@@ -1,6 +1,7 @@
 package com.swkoan.gallows.gt.data.jdbc;
 
 import com.swkoan.gallows.config.DataSourceConfig;
+import com.swkoan.gallows.config.DataSourceVisitor;
 
 /**
  *
@@ -26,6 +27,11 @@ public class PostgisDSConfig implements DataSourceConfig {
         this.database = database;
         this.user = user;
         this.password = password;
+    }
+
+    @Override
+    public void accept(DataSourceVisitor visitor) {
+        visitor.visit(this);
     }
 
     public String getHost() {

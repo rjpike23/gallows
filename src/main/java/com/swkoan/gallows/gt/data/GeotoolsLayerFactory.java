@@ -1,5 +1,6 @@
 package com.swkoan.gallows.gt.data;
 
+import com.swkoan.gallows.config.DataSourceConfig;
 import com.swkoan.gallows.config.LayerConfig;
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,8 +20,10 @@ public class GeotoolsLayerFactory {
 
     public Layer createLayer(LayerConfig layerConfig) {
         try {
-            layerConfig.getDataSourceConfig();
-            Map<String, Object> params = new HashMap<String, Object>();
+            DataSourceConfig dsCfg = layerConfig.getDataSourceConfig();
+            GeotoolsDataSourceVisitor visitor = new GeotoolsDataSourceVisitor();
+            dsCfg.accept(visitor);
+            Map<String, Object> params = visitor.getParams();
             DataStore store = DataStoreFinder.getDataStore(params);
             FeatureSource source = store.getFeatureSource(layerConfig.getName());
             Style style = SLD.createSimpleStyle(source.getSchema());

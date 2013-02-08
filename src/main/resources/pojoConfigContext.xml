@@ -2,35 +2,44 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd" xmlns:aop="http://www.springframework.org/schema/aop">
+    <bean id="postgisConfig" class="com.swkoan.gallows.gt.data.jdbc.PostgisDSConfig">
+        <property name="host" value="192.168.1.135"/>
+        <property name="port" value="5432"/>
+        <property name="database" value="gisdb"/>
+        <property name="schema" value="public"/>
+        <property name="user" value="postgres"/>
+        <property name="password" value="Whitma55"/>
+    </bean>
     <bean id="layerList" class="com.swkoan.gallows.config.pojo.LayerConfigContainer">
         <property name="rootLayerConfig">
             <bean class="com.swkoan.gallows.config.pojo.PojoLayerConfig">
                 <constructor-arg>
-                    <value>com.swkoan.TestLayer</value>
+                    <value>50m_countries</value>
                 </constructor-arg>
                 <constructor-arg>
                     <value>My Test Layer</value>
                 </constructor-arg>
                 <constructor-arg>
                     <list>
-                        <value>WKT1</value>
+                        <value>epsg:4326</value>
                         <value>WKT2</value>
                     </list>
                 </constructor-arg>
                 <constructor-arg>
                     <bean class="com.swkoan.gallows.config.pojo.BoundingBox">
                         <property name="lowerLeftLatitude">
-                            <value>1</value>
+                            <value>-90</value>
                         </property>
                         <property name="lowerLeftLongitude">
-                            <value>2</value>
+                            <value>-180</value>
                         </property>
                         <property name="upperRightLatitude">
-                            <value>3</value>
+                            <value>90</value>
                         </property>
                         <property name="upperRightLongitude">
-                            <value>4</value>
+                            <value>180</value>
                         </property>
                     </bean>
                 </constructor-arg>
@@ -38,6 +47,7 @@
                     <list>
                     </list>
                 </constructor-arg>
+                <property name="dataSourceConfig" ref="postgisConfig"/>
             </bean>
         </property>
     </bean>
