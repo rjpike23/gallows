@@ -57,7 +57,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
     private Capability getCapabilityMetadata() {
         Capability result = new Capability();
 
-        // Request types:
+        // Collect all cap providers and have them provide:
         Map<String, WMSCapabilityProvider> capBeans =
                 springCtx.getBeansOfType(WMSCapabilityProvider.class);
         for (WMSCapabilityProvider provider : capBeans.values()) {

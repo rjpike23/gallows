@@ -13,10 +13,7 @@
             <ref bean="gtStreamingRenderer"/>
         </constructor-arg>
     </bean>
-    
-    <!-- List of exception handlers provided by this server. -->
-    <bean id="wmsXMLErrorHandler" class="com.swkoan.gallows.service.wms.errorhandler.XMLErrorHandler"/>
-    
+
     <!-- The GallowsConfig object to be used for this server. -->
     <bean id="gallowsConfig" class="com.swkoan.gallows.config.pojo.PojoGallowsConfig"/>
     
