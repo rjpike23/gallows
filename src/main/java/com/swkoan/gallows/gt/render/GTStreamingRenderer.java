@@ -20,14 +20,13 @@ public class GTStreamingRenderer implements Renderer {
 
     @Override
     public void render(MapDescription map, Graphics2D graphics) {
+        // Setup data for Geotools
         MapViewport mapViewport = new MapViewport();
         ReferencedEnvelope bbox = new ReferencedEnvelope(map.getBoundingBox());
         mapViewport.setBounds(bbox);
         mapViewport.setScreenArea(map.getImageDim());
-        
         MapContent mapContent = new MapContent();
         mapContent.setViewport(mapViewport);
-        
         GeotoolsLayerFactory layerFactory = new GeotoolsLayerFactory();
         List<Layer> gtLayers = new ArrayList<Layer>();
         for(LayerConfig layerConfig : map.getLayers()) {
@@ -38,8 +37,15 @@ public class GTStreamingRenderer implements Renderer {
         }
         mapContent.addLayers(gtLayers);
         
+        // Render
         StreamingRenderer gtRenderer = new StreamingRenderer();
         gtRenderer.setMapContent(mapContent);
         gtRenderer.paint(graphics, map.getImageDim(), bbox);
+        
+        // Cleanup
+        for(Layer layer: gtLayers) {
+            layer.getFeatureSource().getDataStore().dispose();
+        }
+        mapContent.dispose();
     }
 }

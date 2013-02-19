@@ -54,4 +54,16 @@ public class GetWMSCapabilitiesOpTest {
         verify(handler).setResultMIMEType("text/xml");
         verify(handler).setResult(any(WMSCapabilities.class));
     }
+
+    @Test
+    public void testDefaults() {
+        Operation op = (Operation) appContext.getBean("wmsGetCapabilitiesOp");
+        
+        WMSRequest request = new WMSRequest("http://testvalue.com/", null, "GetCapabilities", null, null, null);
+        ResponseHandler handler = mock(ResponseHandler.class);
+        op.execute(request, handler);
+        
+        verify(handler).setResultMIMEType("text/xml");
+        verify(handler).setResult(any(WMSCapabilities.class));
+    }
 }

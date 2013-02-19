@@ -11,6 +11,7 @@ import com.swkoan.gallows.service.Request;
 import com.swkoan.gallows.service.ResponseHandler;
 import com.swkoan.gallows.service.wms.WMSCapabilityProvider;
 import com.swkoan.gallows.service.wms.WMSConstants;
+import com.swkoan.gallows.service.wms.WMSException;
 import com.swkoan.gallows.service.wms.WMSRequest;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -30,6 +31,8 @@ import net.opengis.wms.OnlineResource;
 import net.opengis.wms.OperationType;
 import net.opengis.wms.Post;
 import org.geotools.referencing.CRS;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -84,15 +87,20 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
             }
             List<LayerConfig> layerConfigs = new ArrayList<LayerConfig>();
             for (String layerName : wmsRequest.getLayerNames()) {
-                layerConfigs.add(gc.getLayerConfig(layerName));
+                LayerConfig lc = gc.getLayerConfig(layerName);
+                if(lc != null) {
+                    layerConfigs.add(lc);
+                }
+                else {
+                    throw new WMSException(layerName, "LayerNotDefined");
+                }
             }
             
-            // TODO: using geotools CRS, this layer should not have dependencies
+            // TODO: using geotools CRS class, this code layer should not have dependencies
             // on non-standards based libraries.
+            CoordinateReferenceSystem crs = CRS.decode(wmsRequest.getCrs());
             MapDescription mapDescription = new MapDescription(
-                    mapSize,
-                    layerConfigs,
-                    CRS.decode(wmsRequest.getCrs()), wmsRequest.getBbox());
+                    mapSize, layerConfigs, crs, wmsRequest.getBbox());
             BufferedImage image = new BufferedImage(
                     (int) mapDescription.getImageDim().getWidth(),
                     (int) mapDescription.getImageDim().getHeight(),
@@ -102,9 +110,15 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
             StreamingOutput output = new RenderedImageStreamingOutput(image, wmsRequest.getFormat());
             handler.setResult(output);
             handler.setResultMIMEType(wmsRequest.getFormat());
-        } catch (Exception e) {
-            // TODO: what to do here?
-            e.printStackTrace();
+        }
+        catch(FactoryException e) {
+            throw new WMSException("", "InvalidCRS", e);
+        }
+        catch(WMSException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new WMSException("Unexpected error", null, e);
         }
     }
 

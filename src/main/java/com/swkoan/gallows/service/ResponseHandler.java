@@ -1,5 +1,7 @@
 package com.swkoan.gallows.service;
 
+import com.swkoan.gallows.service.wms.WMSException;
+
 /**
  *
  */
