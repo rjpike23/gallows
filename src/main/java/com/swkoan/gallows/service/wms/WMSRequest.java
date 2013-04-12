@@ -70,11 +70,11 @@ public class WMSRequest implements Request {
     public Envelope getBbox() {
         String paramVal = getParamValue(WMSConstants.BBOX_PARAM);
         Envelope2D bbox = null;
-        if(paramVal != null) {
+        if (paramVal != null) {
             String[] strings = paramVal.split(",");
-            if(strings.length == 4) {
+            if (strings.length == 4) {
                 double[] dvals = new double[4];
-                for(int i = 0; i < 4; ++i) {
+                for (int i = 0; i < 4; ++i) {
                     dvals[i] = Double.parseDouble(strings[i]);
                 }
                 bbox = new Envelope2D();
@@ -85,16 +85,21 @@ public class WMSRequest implements Request {
     }
 
     public Integer getWidth() {
-        return Integer.parseInt(getParamValue(WMSConstants.WIDTH_PARAM));
+        return getParamValueInteger(WMSConstants.WIDTH_PARAM);
     }
 
     public Integer getHeight() {
-        return Integer.parseInt(getParamValue(WMSConstants.HEIGHT_PARAM));
+        return getParamValueInteger(WMSConstants.HEIGHT_PARAM);
     }
 
     public Boolean getTransparent() {
         String paramValue = getParamValue(WMSConstants.TRANSPARENT_PARAM);
-        return Boolean.parseBoolean(paramValue);
+        if(paramValue != null) {
+            return Boolean.parseBoolean(paramValue);
+        }
+        else {
+            return Boolean.FALSE;
+        }
     }
 
     public String getBackgroundColor() {
@@ -107,22 +112,33 @@ public class WMSRequest implements Request {
 
     private List<String> getParamValueList(String key) {
         List<String> result = null;
-        List<String> paramList = parameterMap.get(key);
-        if (paramList != null) {
-            result = new ArrayList<String>();
-            for (String s : paramList) {
-                result.addAll(Arrays.asList(s.split(",")));
+        if (parameterMap != null) {
+            List<String> paramList = parameterMap.get(key);
+            if (paramList != null) {
+                result = new ArrayList<String>();
+                for (String s : paramList) {
+                    result.addAll(Arrays.asList(s.split(",")));
+                }
             }
         }
         return result;
     }
-    
+
     private String getParamValue(String key) {
         String result = null;
-        List<String> paramList = parameterMap.get(key);
-        if (paramList != null && paramList.size() == 1) {
-            result = paramList.get(0);
+        if (parameterMap != null) {
+            result = parameterMap.getFirst(key);
         }
         return result;
+    }
+
+    private Integer getParamValueInteger(String key) {
+        String val = getParamValue(key);
+        if(val != null) {
+            return Integer.parseInt(val);
+        }
+        else {
+            return null;
+        }
     }
 }

@@ -6,8 +6,50 @@
            
     <!-- List of operations provided by this server. -->
     <bean id="wmsGetCapabilitiesOp" class="com.swkoan.gallows.service.wms.ops.GetWMSCapabilitiesOp"/>
+    <bean id="wmsBufferedImageGetMapOp" class="com.swkoan.gallows.service.wms.ops.BufferedImageGetMapOp">
+        <constructor-arg>
+            <null/>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="worldBBox" class="com.swkoan.gallows.config.pojo.BoundingBox">
+        <property name="lowerLeftLatitude">
+            <value>-90</value>
+        </property>
+        <property name="lowerLeftLongitude">
+            <value>-180</value>
+        </property>
+        <property name="upperRightLatitude">
+            <value>90</value>
+        </property>
+        <property name="upperRightLongitude">
+            <value>180</value>
+        </property>
+    </bean>
     
     <!-- The GallowsConfig object to be used for this server. -->
     <bean id="gallowsConfig" class="com.swkoan.gallows.config.pojo.PojoGallowsConfig"/>
-    
+    <bean id="layerList" class="com.swkoan.gallows.config.pojo.LayerConfigContainer">
+        <property name="rootLayerConfig">
+            <bean class="com.swkoan.gallows.config.pojo.PojoLayerConfig">
+                <constructor-arg>
+                    <value>Layer1</value>
+                </constructor-arg>
+                <constructor-arg>
+                    <value>My Test Layer</value>
+                </constructor-arg>
+                <constructor-arg>
+                    <list>
+                        <value>WKT1</value>
+                        <value>WKT2</value>
+                    </list>
+                </constructor-arg>
+                <constructor-arg ref="worldBBox"/>
+                <constructor-arg>
+                    <list>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
 </beans>

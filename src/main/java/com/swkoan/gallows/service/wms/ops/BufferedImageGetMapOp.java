@@ -79,6 +79,16 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
     public void execute(Request request, ResponseHandler handler) {
         try {
             WMSRequest wmsRequest = (WMSRequest) request;
+            String crsParam = wmsRequest.getCrs();
+            if(crsParam == null) {
+                throw new WMSException("SRS parameter is required", "InvalidParameters");
+            }
+            if(wmsRequest.getWidth() == null || wmsRequest.getHeight() == null) {
+                throw new WMSException("HEIGHT and WIDTH parameters are required.", "InvalidParameters");
+            }
+            if(wmsRequest.getLayerNames() == null) {
+                throw new WMSException("LAYERS parameter is required", "InvalidParameters");
+            }
             Rectangle mapSize = new Rectangle(wmsRequest.getWidth(), wmsRequest.getHeight());
 
             GallowsConfig gc = (GallowsConfig) springCtx.getBean("gallowsConfig");
@@ -98,7 +108,7 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
             
             // TODO: using geotools CRS class, this code layer should not have dependencies
             // on non-standards based libraries.
-            CoordinateReferenceSystem crs = CRS.decode(wmsRequest.getCrs());
+            CoordinateReferenceSystem crs = CRS.decode(crsParam);
             MapDescription mapDescription = new MapDescription(
                     mapSize, layerConfigs, crs, wmsRequest.getBbox());
             BufferedImage image = new BufferedImage(

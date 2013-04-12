@@ -33,6 +33,10 @@ public class WMSException extends RuntimeException {
         super(msg, cause);
         this.code = code;
     }
+
+    public String getCode() {
+        return code;
+    }
     
     public ServiceExceptionReport getWMSExceptionXML() {
         ServiceExceptionReport svcEx = new ServiceExceptionReport();
