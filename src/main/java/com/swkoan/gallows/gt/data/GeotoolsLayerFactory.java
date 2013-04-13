@@ -3,7 +3,6 @@ package com.swkoan.gallows.gt.data;
 import com.swkoan.gallows.config.DataSourceConfig;
 import com.swkoan.gallows.config.LayerConfig;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;

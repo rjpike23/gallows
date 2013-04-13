@@ -38,10 +38,11 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
     public void execute(Request request, ResponseHandler handler) {
         WMSRequest wmsRequest = (WMSRequest) request;
         WMSCapabilities caps = new WMSCapabilities();
+        caps.setVersion("1.3.0");
         caps.setService(getServiceMetadata(wmsRequest));
         caps.setCapability(getCapabilityMetadata());
         handler.setResult(caps);
-        handler.setResultMIMEType(wmsRequest.getFormat());
+        handler.setResultMIMEType("text/xml");
     }
 
     private Service getServiceMetadata(WMSRequest request) {
@@ -57,7 +58,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
     private Capability getCapabilityMetadata() {
         Capability result = new Capability();
 
-        // Request types:
+        // Collect all cap providers and have them provide:
         Map<String, WMSCapabilityProvider> capBeans =
                 springCtx.getBeansOfType(WMSCapabilityProvider.class);
         for (WMSCapabilityProvider provider : capBeans.values()) {
