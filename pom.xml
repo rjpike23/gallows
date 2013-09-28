@@ -168,7 +168,7 @@
         </dependency>
         <dependency>
             <groupId>org.geotools</groupId>
-            <artifactId>gt-epsq-hsql</artifactId>
+            <artifactId>gt-epsg-hsql</artifactId>
             <version>8.4</version>
         </dependency>
         <dependency>
