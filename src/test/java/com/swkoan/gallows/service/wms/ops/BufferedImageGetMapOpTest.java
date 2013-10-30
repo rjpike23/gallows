@@ -71,7 +71,7 @@ public class BufferedImageGetMapOpTest {
         params.add(WMSConstants.HEIGHT_PARAM, "300");
         params.add(WMSConstants.WIDTH_PARAM, "350");
         params.add(WMSConstants.SRS_PARAM, "epsg:4326");
-        params.add(WMSConstants.LAYERS_PARAM, "50m_countries");
+        params.add(WMSConstants.LAYERS_PARAM, "ne_50m_admin_0_countries");
         WMSRequest request = new WMSRequest("http://testvalue.com/", null,
                 WMSConstants.GET_MAP_OP, "1.3.0", "image/png", params);
 
@@ -89,19 +89,19 @@ public class BufferedImageGetMapOpTest {
     public void testInvalidHeightWidth() {
         MultivaluedMap<String, String> params = new MVHashMap<String, String>();
         params.add(WMSConstants.SRS_PARAM, "epsg:4326");
-        params.add(WMSConstants.LAYERS_PARAM, "50m_countries");
+        params.add(WMSConstants.LAYERS_PARAM, "ne_50m_admin_0_countries");
         callExecuteWithInvalidParams(params, "InvalidParameters");
         
         params = new MVHashMap<String, String>();
         params.add(WMSConstants.HEIGHT_PARAM, "300");
         params.add(WMSConstants.SRS_PARAM, "epsg:4326");
-        params.add(WMSConstants.LAYERS_PARAM, "50m_countries");
+        params.add(WMSConstants.LAYERS_PARAM, "ne_50m_admin_0_countries");
         callExecuteWithInvalidParams(params, "InvalidParameters");
         
         params = new MVHashMap<String, String>();
         params.add(WMSConstants.WIDTH_PARAM, "350");
         params.add(WMSConstants.SRS_PARAM, "epsg:4326");
-        params.add(WMSConstants.LAYERS_PARAM, "50m_countries");
+        params.add(WMSConstants.LAYERS_PARAM, "ne_50m_admin_0_countries");
         callExecuteWithInvalidParams(params, "InvalidParameters");
     }
     
@@ -110,14 +110,14 @@ public class BufferedImageGetMapOpTest {
         MultivaluedMap<String, String> params = new MVHashMap<String, String>();
         params.add(WMSConstants.HEIGHT_PARAM, "300");
         params.add(WMSConstants.WIDTH_PARAM, "350");
-        params.add(WMSConstants.LAYERS_PARAM, "50m_countries");
+        params.add(WMSConstants.LAYERS_PARAM, "ne_50m_admin_0_countries");
         callExecuteWithInvalidParams(params, "InvalidParameters");
         
         params = new MVHashMap<String, String>();
         params.add(WMSConstants.HEIGHT_PARAM, "300");
         params.add(WMSConstants.WIDTH_PARAM, "350");
         params.add(WMSConstants.SRS_PARAM, "bleh");
-        params.add(WMSConstants.LAYERS_PARAM, "50m_countries");
+        params.add(WMSConstants.LAYERS_PARAM, "ne_50m_admin_0_countries");
         callExecuteWithInvalidParams(params, "InvalidCRS");
     }
 
