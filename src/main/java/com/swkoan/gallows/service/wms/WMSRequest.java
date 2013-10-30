@@ -47,10 +47,6 @@ public class WMSRequest implements Request {
         return version;
     }
 
-    public String getURL() {
-        return url;
-    }
-
     public String getUrl() {
         return url;
     }

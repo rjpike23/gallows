@@ -40,7 +40,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
         WMSCapabilities caps = new WMSCapabilities();
         caps.setVersion("1.3.0");
         caps.setService(getServiceMetadata(wmsRequest));
-        caps.setCapability(getCapabilityMetadata());
+        caps.setCapability(getCapabilityMetadata(wmsRequest));
         handler.setResult(caps);
         handler.setResultMIMEType("text/xml");
     }
@@ -50,19 +50,19 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
         result.setName("WMS");
         result.setTitle("Gallows WMS Server");
         OnlineResource or = new OnlineResource();
-        or.setHref(request.getURL());
+        or.setHref(request.getUrl());
         result.setOnlineResource(or);
         return result;
     }
 
-    private Capability getCapabilityMetadata() {
+    private Capability getCapabilityMetadata(WMSRequest request) {
         Capability result = new Capability();
 
         // Collect all cap providers and have them provide:
         Map<String, WMSCapabilityProvider> capBeans =
                 springCtx.getBeansOfType(WMSCapabilityProvider.class);
         for (WMSCapabilityProvider provider : capBeans.values()) {
-            provider.provide(result);
+            provider.provide(request, result);
         }
 
         // Layers:
@@ -82,7 +82,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
     }
 
     @Override
-    public void provide(Capability cap) {
+    public void provide(WMSRequest request, Capability cap) {
         if (cap.getRequest() == null) {
             cap.setRequest(new net.opengis.wms.Request());
         }
@@ -93,7 +93,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
         Get get = new Get();
         OnlineResource or = new OnlineResource();
         or.setType("simple");
-        or.setHref("http://request");
+        or.setHref(request.getUrl());
         get.setOnlineResource(or);
         http.setGet(get);
         Post post = new Post();

@@ -7,5 +7,5 @@ import net.opengis.wms.Capability;
  */
 public interface WMSCapabilityProvider {
 
-    void provide(Capability cap);
+    void provide(WMSRequest req, Capability cap);
 }

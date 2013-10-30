@@ -133,7 +133,7 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
     }
 
     @Override
-    public void provide(Capability cap) {
+    public void provide(WMSRequest request, Capability cap) {
         if (cap.getRequest() == null) {
             cap.setRequest(new net.opengis.wms.Request());
         }
@@ -144,7 +144,7 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
             Get get = new Get();
             OnlineResource or = new OnlineResource();
             or.setType("simple");
-            or.setHref("http://request");
+            or.setHref(request.getUrl());
             get.setOnlineResource(or);
             http.setGet(get);
             Post post = new Post();
