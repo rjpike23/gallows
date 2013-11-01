@@ -106,8 +106,8 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
                 }
             }
             
-            // TODO: using geotools CRS class, this code layer should not have dependencies
-            // on non-standards based libraries.
+            // TODO: using geotools CRS class, this code layer should not have
+            // dependencies on non-standards based libraries.
             CoordinateReferenceSystem crs = CRS.decode(crsParam);
             MapDescription mapDescription = new MapDescription(
                     mapSize, layerConfigs, crs, wmsRequest.getBbox());

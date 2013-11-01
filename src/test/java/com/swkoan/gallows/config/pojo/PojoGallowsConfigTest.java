@@ -16,9 +16,9 @@ import org.junit.BeforeClass;
  *
  * @author rpike
  */
-public class PojoGallowConfigTest {
+public class PojoGallowsConfigTest {
     
-    public PojoGallowConfigTest() {
+    public PojoGallowsConfigTest() {
     }
 
     @BeforeClass

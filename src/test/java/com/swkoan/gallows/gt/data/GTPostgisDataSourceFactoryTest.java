@@ -10,9 +10,9 @@ import static org.junit.Assert.*;
 /**
  *
  */
-public class GeotoolsDataSourceVisitorTest {
+public class GTPostgisDataSourceFactoryTest {
     
-    public GeotoolsDataSourceVisitorTest() {
+    public GTPostgisDataSourceFactoryTest() {
     }
     
     @BeforeClass

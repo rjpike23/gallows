@@ -5,6 +5,9 @@
     
     <!-- Renderers -->
     <bean id="gtStreamingRenderer" class="com.swkoan.gallows.gt.render.GTStreamingRenderer"/>
+    <bean id="gtPGDSFactory" class="com.swkoan.gallows.gt.data.GTPostgisDataSourceFactory">
+        <property name="renderer" ref="gtStreamingRenderer"/>
+    </bean>
     
     <!-- List of operations provided by this server. -->
     <bean id="wmsGetCapabilitiesOp" class="com.swkoan.gallows.service.wms.ops.GetWMSCapabilitiesOp"/>
