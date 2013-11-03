@@ -2,8 +2,8 @@ package com.swkoan.gallows.gt.data;
 
 import com.swkoan.gallows.config.DataSourceConfig;
 import com.swkoan.gallows.data.DataSourceFactory;
+import com.swkoan.gallows.data.LayerFactory;
 import com.swkoan.gallows.gt.data.jdbc.PostgisDSConfig;
-import com.swkoan.gallows.render.Renderer;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +37,7 @@ public class GTPostgisDataSourceFactory implements DataSourceFactory<DataStore> 
             params.put(USER, pgDsConfig.getUser());
             params.put(PASSWORD, pgDsConfig.getPassword());
             return DataStoreFinder.getDataStore(params);
-        } 
+        }
         catch (IOException e) {
             // TODO: what to do here?
             return null;
@@ -50,7 +50,8 @@ public class GTPostgisDataSourceFactory implements DataSourceFactory<DataStore> 
     }
 
     @Override
-    public void setRenderer(Renderer renderer) {
-        renderer.registerDataSourceFactory(this);
+    public void setLayerFactory(LayerFactory layerFactory) {
+        layerFactory.registerDataSourceFactory(this);
     }
+
 }

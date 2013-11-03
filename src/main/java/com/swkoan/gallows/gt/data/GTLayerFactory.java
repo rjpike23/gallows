@@ -3,7 +3,9 @@ package com.swkoan.gallows.gt.data;
 import com.swkoan.gallows.config.DataSourceConfig;
 import com.swkoan.gallows.config.LayerConfig;
 import com.swkoan.gallows.data.DataSourceFactory;
+import com.swkoan.gallows.data.LayerFactory;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
@@ -15,19 +17,32 @@ import org.geotools.styling.Style;
 /**
  *
  */
-public class GTLayerFactory {
-    private Map<String, DataSourceFactory<DataStore>> dsFactories;
+public class GTLayerFactory implements LayerFactory<Layer, DataStore> {
 
-    public GTLayerFactory(Map<String, DataSourceFactory<DataStore>> dsFactories) {
-        this.dsFactories = dsFactories;
+    private Map<String, DataSourceFactory<DataStore>> dsFactories =
+            new HashMap<String, DataSourceFactory<DataStore>>();
+
+    @Override
+    public void registerDataSourceFactory(DataSourceFactory factory) {
+        dsFactories.put(factory.getDataSourceConfigClassname(), factory);
     }
 
+    @Override
+    public DataStore createDataSource(DataSourceConfig dsCfg) {
+        DataStore store = null;
+        DataSourceFactory<DataStore> dsFactory = dsFactories.get(dsCfg.getClass().getName());
+        if (dsFactory != null) {
+            store = dsFactory.createDataSource(dsCfg);
+        }
+        return store;
+    }
+
+    @Override
     public Layer createLayer(LayerConfig layerConfig) {
         try {
             DataSourceConfig dsCfg = layerConfig.getDataSourceConfig();
-            DataSourceFactory<DataStore> dsFactory = dsFactories.get(dsCfg.getClass().getName());
-            if(dsFactory != null) {
-                DataStore store = dsFactory.createDataSource(dsCfg);
+            DataStore store = createDataSource(dsCfg);
+            if (store != null) {
                 FeatureSource source = store.getFeatureSource(layerConfig.getName());
                 Style style = SLD.createSimpleStyle(source.getSchema());
                 Layer layer = new FeatureLayer(source, style);
@@ -37,8 +52,7 @@ public class GTLayerFactory {
                 //TODO: what to do here?
                 return null;
             }
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             //TODO: what to do here?
             return null;
         }

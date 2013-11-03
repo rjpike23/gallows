@@ -3,10 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
-    <!-- Renderers -->
-    <bean id="gtStreamingRenderer" class="com.swkoan.gallows.gt.render.GTStreamingRenderer"/>
+    <!-- Layer and data source factories -->
+    <bean id="layerFactory" class="com.swkoan.gallows.gt.data.GTLayerFactory"/>
     <bean id="gtPGDSFactory" class="com.swkoan.gallows.gt.data.GTPostgisDataSourceFactory">
-        <property name="renderer" ref="gtStreamingRenderer"/>
+        <property name="layerFactory" ref="layerFactory"/>
+    </bean>
+    
+    <!-- Renderers -->
+    <bean id="gtStreamingRenderer" class="com.swkoan.gallows.gt.render.GTStreamingRenderer">
+        <property name="layerFactory" ref="layerFactory"/>
     </bean>
     
     <!-- List of operations provided by this server. -->

@@ -5,8 +5,7 @@
 package com.swkoan.gallows.config.pojo;
 
 import com.swkoan.gallows.config.ConfigStatus;
-import com.swkoan.gallows.config.LayerConfig;
-import java.util.List;
+import com.swkoan.gallows.config.FolderConfig;
 import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -48,6 +47,6 @@ public class PojoGallowsConfigTest {
     public void testLayerConfigs() {
         PojoGallowsConfig gc = new PojoGallowsConfig();
         gc.load();
-        LayerConfig config = gc.getRootLayerConfig();
+        FolderConfig config = gc.getRootLayerConfig();
     }
 }

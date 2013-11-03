@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-           
+                
     <!-- List of operations provided by this server. -->
     <bean id="wmsGetCapabilitiesOp" class="com.swkoan.gallows.service.wms.ops.GetWMSCapabilitiesOp"/>
     <bean id="wmsBufferedImageGetMapOp" class="com.swkoan.gallows.service.wms.ops.BufferedImageGetMapOp">

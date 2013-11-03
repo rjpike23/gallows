@@ -1,7 +1,5 @@
 package com.swkoan.gallows.config;
 
-import java.util.List;
-
 /**
  *
  */
@@ -13,7 +11,7 @@ public interface GallowsConfig {
     
     ConfigStatus status();
 
-    LayerConfig getRootLayerConfig();
+    FolderConfig getRootLayerConfig();
     
     LayerConfig getLayerConfig(String name);
     

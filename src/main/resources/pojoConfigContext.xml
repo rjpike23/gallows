@@ -4,6 +4,13 @@
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd" xmlns:aop="http://www.springframework.org/schema/aop">
+
+    <!-- Layer and data source factories -->
+    <bean id="layerFactory" class="com.swkoan.gallows.gt.data.GTLayerFactory"/>
+    <bean id="gtPGDSFactory" class="com.swkoan.gallows.gt.data.GTPostgisDataSourceFactory">
+        <property name="layerFactory" ref="layerFactory"/>
+    </bean>
+  
     <bean id="postgisConfig" class="com.swkoan.gallows.gt.data.jdbc.PostgisDSConfig">
         <property name="host" value="192.168.1.142"/>
         <property name="port" value="5432"/>
@@ -12,43 +19,21 @@
         <property name="user" value="gistester"/>
         <property name="password" value="testpw01"/>
     </bean>
+    
+    <bean id="root" class="com.swkoan.gallows.config.pojo.PojoFolderConfig">
+        <constructor-arg>
+            <value>Root Layer</value>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="gtJdbcFolder" class="com.swkoan.gallows.gt.config.GTJDBCLayerConfig">
+        <constructor-arg ref="postgisConfig"/>
+        <constructor-arg ref="layerFactory"/>
+        <property name="parent" ref="root"/>
+        <property name="title" value="PostGIS Layers"/>
+     </bean>
+    
     <bean id="layerList" class="com.swkoan.gallows.config.pojo.LayerConfigContainer">
-        <property name="rootLayerConfig">
-            <bean class="com.swkoan.gallows.config.pojo.PojoLayerConfig">
-                <constructor-arg>
-                    <value>ne_50m_admin_0_countries</value>
-                </constructor-arg>
-                <constructor-arg>
-                    <value>My Test Layer</value>
-                </constructor-arg>
-                <constructor-arg>
-                    <list>
-                        <value>epsg:4326</value>
-                        <value>WKT2</value>
-                    </list>
-                </constructor-arg>
-                <constructor-arg>
-                    <bean class="com.swkoan.gallows.config.pojo.BoundingBox">
-                        <property name="lowerLeftLatitude">
-                            <value>-90</value>
-                        </property>
-                        <property name="lowerLeftLongitude">
-                            <value>-180</value>
-                        </property>
-                        <property name="upperRightLatitude">
-                            <value>90</value>
-                        </property>
-                        <property name="upperRightLongitude">
-                            <value>180</value>
-                        </property>
-                    </bean>
-                </constructor-arg>
-                <constructor-arg>
-                    <list>
-                    </list>
-                </constructor-arg>
-                <property name="dataSourceConfig" ref="postgisConfig"/>
-            </bean>
-        </property>
+        <property name="rootLayerConfig" ref="root"/>
     </bean>
 </beans>

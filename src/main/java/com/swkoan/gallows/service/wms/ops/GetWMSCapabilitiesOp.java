@@ -2,6 +2,7 @@ package com.swkoan.gallows.service.wms.ops;
 
 import com.swkoan.gallows.service.wms.WMSLayerCapabilityProvider;
 import com.swkoan.gallows.config.ConfigStatus;
+import com.swkoan.gallows.config.FolderConfig;
 import com.swkoan.gallows.config.GallowsConfig;
 import com.swkoan.gallows.config.LayerConfig;
 import com.swkoan.gallows.service.Operation;
@@ -70,13 +71,13 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
         if(gc.status().getCurrentState() != ConfigStatus.States.LOADED) {
             gc.load();
         }
-        LayerConfig layerCfg = gc.getRootLayerConfig();
+        FolderConfig layerCfg = gc.getRootLayerConfig();
         Layer layerMD = getLayerMetadata(layerCfg);
         result.setLayer(layerMD);
         return result;
     }
 
-    private Layer getLayerMetadata(LayerConfig layerCfg) {
+    private Layer getLayerMetadata(FolderConfig layerCfg) {
         WMSLayerCapabilityProvider provider = new WMSLayerCapabilityProvider();
         return provider.provide(layerCfg);
     }
