@@ -6,13 +6,14 @@ import com.swkoan.gallows.data.MapDescription;
 import com.swkoan.gallows.render.Renderer;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.geotools.data.DataStore;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.Layer;
 import org.geotools.map.MapContent;
 import org.geotools.map.MapViewport;
-import org.geotools.renderer.lite.RendererUtilities;
 import org.geotools.renderer.lite.StreamingRenderer;
 
 /**
@@ -47,10 +48,12 @@ public class GTStreamingRenderer implements Renderer {
         
         // Render
         StreamingRenderer gtRenderer = new StreamingRenderer();
+        Map<Object, Object> rendererParams = new HashMap<Object, Object>();
+        rendererParams.put(StreamingRenderer.ADVANCED_PROJECTION_HANDLING_KEY, true);
+        gtRenderer.setRendererHints(rendererParams);
         gtRenderer.setMapContent(mapContent);
         try {
-            gtRenderer.paint(graphics, map.getImageDim(), bbox,
-                    RendererUtilities.worldToScreenTransform(bbox, map.getImageDim(), map.getCrs()));
+            gtRenderer.paint(graphics, map.getImageDim(), bbox);
         }
         catch(Exception e) {
             e.printStackTrace();

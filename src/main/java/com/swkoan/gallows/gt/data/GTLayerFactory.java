@@ -22,6 +22,10 @@ public class GTLayerFactory implements LayerFactory<Layer, DataStore> {
     private Map<String, DataSourceFactory<DataStore>> dsFactories =
             new HashMap<String, DataSourceFactory<DataStore>>();
 
+    public GTLayerFactory() {
+        System.getProperties().setProperty("org.geotools.referencing.forceXY", "true");
+    }
+
     @Override
     public void registerDataSourceFactory(DataSourceFactory factory) {
         dsFactories.put(factory.getDataSourceConfigClassname(), factory);

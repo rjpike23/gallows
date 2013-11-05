@@ -12,6 +12,7 @@ import java.util.Set;
 import org.geotools.data.DataStore;
 import org.geotools.map.Layer;
 import org.geotools.referencing.CRS;
+import org.opengis.geometry.Envelope;
 
 /**
  *
@@ -64,8 +65,9 @@ public class GTJDBCLayerConfig extends PojoFolderConfig implements FolderConfig 
             for(int i = 0; i < types.length; ++i) {
                 PojoLayerConfig layerConfig = new PojoLayerConfig(types[i], types[i]);
                 layerConfig.setDataSourceConfig(dsConfig);
-                layerConfig.setExGeographicBoundingBox(ds.getFeatureSource(types[i]).getBounds());
-                layerConfig.getBoundingBox().add(ds.getFeatureSource(types[i]).getBounds());
+                Envelope bounds = ds.getFeatureSource(types[i]).getBounds();
+                layerConfig.setExGeographicBoundingBox(bounds);
+                layerConfig.getBoundingBox().add(bounds);
                 childLayers.add(layerConfig);
             }
             ds.dispose();
