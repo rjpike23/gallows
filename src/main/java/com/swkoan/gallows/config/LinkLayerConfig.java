@@ -1,5 +1,6 @@
 package com.swkoan.gallows.config;
 
+import com.swkoan.gallows.security.SecurityDescriptor;
 import java.util.List;
 import org.opengis.geometry.Envelope;
 
@@ -49,6 +50,11 @@ public class LinkLayerConfig implements LayerConfig {
     @Override
     public DataSourceConfig getDataSourceConfig() {
         return target.getDataSourceConfig();
+    }
+
+    @Override
+    public SecurityDescriptor getSecurityDescriptor() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

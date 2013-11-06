@@ -1,6 +1,7 @@
 package com.swkoan.gallows.config.pojo;
 
 import com.swkoan.gallows.config.FolderConfig;
+import com.swkoan.gallows.security.SecurityDescriptor;
 import java.math.BigInteger;
 import java.net.URL;
 import java.util.ArrayList;
@@ -228,5 +229,10 @@ public class PojoFolderConfig implements FolderConfig {
 
     public void setQueryable(Boolean queryable) {
         this.queryable = queryable;
+    }
+
+    @Override
+    public SecurityDescriptor getSecurityDescriptor() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
