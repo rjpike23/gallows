@@ -23,7 +23,9 @@
     </bean>
 
     <!-- The GallowsConfig object to be used for this server. -->
-    <bean id="gallowsConfig" class="com.swkoan.gallows.config.pojo.PojoGallowsConfig"/>
+    <bean id="gallowsConfig" class="com.swkoan.gallows.config.pojo.PojoGallowsConfig">
+        <property name="suppCtxFile" value="/pojoConfigContext.xml"/>
+    </bean>
     
     <!-- The configuration of the dispatcher. -->
     <bean id="dispatcher" class="com.swkoan.gallows.service.OperationDispatcher">

@@ -14,25 +14,17 @@ public class GTStreamingRendererTest {
     
     public GTStreamingRendererTest() {
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
+
+    // Only one lame test to avoid going down the rabbit hole on GT rendering process.
+    @Test
+    public void testRenderNull() {
+        try {
+            GTStreamingRenderer rend = new GTStreamingRenderer();
+            rend.render(null, null);
+            fail("Expected NPE.");
+        }
+        catch(NullPointerException e) {
+            // expected.
+        }
     }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 }

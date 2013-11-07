@@ -56,7 +56,8 @@ public class GTLayerFactory implements LayerFactory<Layer, DataStore> {
                 //TODO: what to do here?
                 return null;
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             //TODO: what to do here?
             return null;
         }

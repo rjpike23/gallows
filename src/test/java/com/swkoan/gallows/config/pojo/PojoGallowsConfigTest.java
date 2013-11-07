@@ -1,36 +1,38 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.swkoan.gallows.config.pojo;
 
 import com.swkoan.gallows.config.ConfigStatus;
 import com.swkoan.gallows.config.FolderConfig;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.BeforeClass;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
- * @author rpike
  */
 public class PojoGallowsConfigTest {
     
+    ApplicationContext appCtx;
     public PojoGallowsConfigTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
+    @Before
+    public void setupAppContext() {
+        appCtx = new ClassPathXmlApplicationContext("testAppContext.xml");
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
+    @After
+    public void destroyAppContext() {
+        appCtx = null;
     }
-    
+
     @Test
     public void testLoad() {
-        PojoGallowsConfig gc = new PojoGallowsConfig();
+        PojoGallowsConfig gc = (PojoGallowsConfig) appCtx.getBean("gallowsConfig");
         assertTrue(gc.status().getCurrentState() == ConfigStatus.States.INIT);
         try {
             gc.getRootLayerConfig();
@@ -41,12 +43,7 @@ public class PojoGallowsConfigTest {
         }
         gc.load();
         assertTrue(gc.status().getCurrentState() == ConfigStatus.States.LOADED);
-    }
-    
-    @Test
-    public void testLayerConfigs() {
-        PojoGallowsConfig gc = new PojoGallowsConfig();
-        gc.load();
         FolderConfig config = gc.getRootLayerConfig();
+        assertNotNull(config);
     }
 }

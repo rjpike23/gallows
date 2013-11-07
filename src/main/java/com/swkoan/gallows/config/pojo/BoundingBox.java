@@ -21,8 +21,8 @@ public class BoundingBox {
         this.fromEnvelope(envelope);
     }
     
-    public BoundingBox(double lowerLeftLatitude, double lowerLeftLongitude,
-            double upperRightLatitude, double upperRightLongitude) {
+    public BoundingBox(double lowerLeftLongitude, double lowerLeftLatitude,
+            double upperRightLongitude, double upperRightLatitude) {
         this.lowerLeftLatitude = lowerLeftLatitude;
         this.lowerLeftLongitude = lowerLeftLongitude;
         this.upperRightLatitude = upperRightLatitude;
