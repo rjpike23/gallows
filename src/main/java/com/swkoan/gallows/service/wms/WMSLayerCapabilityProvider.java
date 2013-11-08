@@ -2,11 +2,13 @@ package com.swkoan.gallows.service.wms;
 
 import com.swkoan.gallows.config.FolderConfig;
 import com.swkoan.gallows.config.LayerConfig;
+import java.util.Set;
 import net.opengis.wms.BoundingBox;
 import net.opengis.wms.EXGeographicBoundingBox;
 import net.opengis.wms.Layer;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.Envelope;
+import org.opengis.referencing.ReferenceIdentifier;
 
 /**
  *
@@ -41,7 +43,13 @@ public class WMSLayerCapabilityProvider {
             bb.setMaxy(env.getUpperCorner().getOrdinate(1));
             bb.setMinx(env.getLowerCorner().getOrdinate(0));
             bb.setMiny(env.getLowerCorner().getOrdinate(1));
-            bb.setCRS(env.getCoordinateReferenceSystem().toWKT());
+            if(env.getCoordinateReferenceSystem() != null) {
+                Set<ReferenceIdentifier> names = env.getCoordinateReferenceSystem().getIdentifiers();
+                for(ReferenceIdentifier name: names) {
+                    bb.setCRS(name.toString());
+                    break;
+                }
+            }
             layer.getBoundingBox().add(bb);
         }
 

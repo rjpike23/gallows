@@ -1,81 +1,33 @@
 package com.swkoan.gallows.gt.config;
 
-import com.swkoan.gallows.config.DataSourceConfig;
-import com.swkoan.gallows.config.FolderConfig;
-import com.swkoan.gallows.config.pojo.PojoFolderConfig;
+import com.swkoan.gallows.config.LayerConfig;
 import com.swkoan.gallows.config.pojo.PojoLayerConfig;
-import com.swkoan.gallows.data.LayerFactory;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import org.geotools.data.DataStore;
-import org.geotools.map.Layer;
-import org.geotools.referencing.CRS;
 import org.opengis.geometry.Envelope;
 
 /**
  *
  */
-public class GTJDBCLayerConfig extends PojoFolderConfig implements FolderConfig {
-    DataSourceConfig dsConfig;
-    LayerFactory<Layer, DataStore> layerFactory;
+public class GTJDBCLayerConfig extends PojoLayerConfig implements LayerConfig {
+    List<Envelope> bboxes = new ArrayList<Envelope>();
 
-    public GTJDBCLayerConfig(DataSourceConfig dsConfig, LayerFactory<Layer, DataStore> layerFactory) {
-        this.dsConfig = dsConfig;
-        this.layerFactory = layerFactory;
-        update();
+    public GTJDBCLayerConfig() {
+    }
+
+    public GTJDBCLayerConfig(String name, String title) {
+        super(name, title);
     }
 
     @Override
-    public List<String> getCrs() {
-        List<String> crs = new ArrayList<String>();
-        Set<String> authSet = CRS.getSupportedAuthorities(false);
-        for(String auth: authSet) {
-            Set<String> codes = CRS.getSupportedCodes(auth);
-            crs.addAll(codes);
-        }
-        return crs;
+    public List<Envelope> getBoundingBox() {
+        return bboxes;
     }
 
-    public DataSourceConfig getDataSourceConfig() {
-        return dsConfig;
+    @Override
+    public void setBoundingBox(List<Envelope> boundingBox) {
+        bboxes = boundingBox;
     }
     
-    public void setDataSourceConfig(DataSourceConfig dsConfig) {
-        this.dsConfig = dsConfig;
-
-        update();
-    }
-
-    public LayerFactory<Layer, DataStore> getLayerFactory() {
-        return layerFactory;
-    }
-
-    public void setLayerFactory(LayerFactory<Layer, DataStore> layerFactory) {
-        this.layerFactory = layerFactory;
-        update();
-    }
-    
-    private void update() {
-        List<FolderConfig> childLayers = new ArrayList<FolderConfig>();
-        DataStore ds = layerFactory.createDataSource(dsConfig);
-        try {
-            String[] types = ds.getTypeNames();
-            for(int i = 0; i < types.length; ++i) {
-                PojoLayerConfig layerConfig = new PojoLayerConfig(types[i], types[i]);
-                layerConfig.setDataSourceConfig(dsConfig);
-                Envelope bounds = ds.getFeatureSource(types[i]).getBounds();
-                layerConfig.setExGeographicBoundingBox(bounds);
-                layerConfig.getBoundingBox().add(bounds);
-                childLayers.add(layerConfig);
-            }
-            ds.dispose();
-            setChildren(childLayers);
-        }
-        catch(IOException e) {
-            // TODO: What to do here?
-        }
-    }
     
 }

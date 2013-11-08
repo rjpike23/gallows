@@ -26,7 +26,7 @@
         </constructor-arg>
     </bean>
     
-    <bean id="gtJdbcFolder" class="com.swkoan.gallows.gt.config.GTJDBCLayerConfig">
+    <bean id="gtJdbcFolder" class="com.swkoan.gallows.gt.config.GTJDBCFolderConfig">
         <constructor-arg ref="postgisConfig"/>
         <constructor-arg ref="layerFactory"/>
         <property name="parent" ref="root"/>
