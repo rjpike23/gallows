@@ -30,7 +30,6 @@ import net.opengis.wms.HTTP;
 import net.opengis.wms.OnlineResource;
 import net.opengis.wms.OperationType;
 import net.opengis.wms.Post;
-import org.geotools.geometry.Envelope2D;
 import org.geotools.referencing.CRS;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;

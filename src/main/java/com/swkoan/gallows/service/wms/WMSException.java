@@ -9,6 +9,7 @@ import net.opengis.ogc.ServiceExceptionType;
  *
  */
 public class WMSException extends RuntimeException {
+
     private String code;
 
     /**
@@ -28,7 +29,7 @@ public class WMSException extends RuntimeException {
         super(msg);
         this.code = code;
     }
-    
+
     public WMSException(String msg, String code, Throwable cause) {
         super(msg, cause);
         this.code = code;
@@ -37,17 +38,17 @@ public class WMSException extends RuntimeException {
     public String getCode() {
         return code;
     }
-    
+
     public ServiceExceptionReport getWMSExceptionXML() {
         ServiceExceptionReport svcEx = new ServiceExceptionReport();
         svcEx.setVersion("1.3.0");
         ServiceExceptionType svcExType = new ServiceExceptionType();
         svcExType.setCode(code);
         svcExType.setValue(this.getMessage());
-        StringWriter stackTrace = new StringWriter();
-        PrintWriter pw = new PrintWriter(stackTrace);
-        this.printStackTrace(pw);
-        svcExType.setLocator(stackTrace.toString());
+        StackTraceElement[] stackTrace = this.getStackTrace();
+        if (stackTrace.length > 0) {
+            svcExType.setLocator(stackTrace[0].toString());
+        }
         svcEx.getServiceException().add(svcExType);
         return svcEx;
     }
