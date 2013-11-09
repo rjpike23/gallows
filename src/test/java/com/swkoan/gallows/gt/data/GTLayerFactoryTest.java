@@ -1,6 +1,7 @@
 package com.swkoan.gallows.gt.data;
 
 import com.swkoan.gallows.config.DataSourceConfig;
+import com.swkoan.gallows.config.GallowsException;
 import com.swkoan.gallows.config.LayerConfig;
 import com.swkoan.gallows.data.DataSourceFactory;
 import com.vividsolutions.jts.geom.Point;
@@ -133,8 +134,13 @@ public class GTLayerFactoryTest {
         
         GTLayerFactory gtlf = new GTLayerFactory();
         gtlf.registerDataSourceFactory(dsfMock);
-        Layer layer = gtlf.createLayer(lCfgMock);
-        assertNull(layer);
+        try {
+            Layer layer = gtlf.createLayer(lCfgMock);
+            fail("Expected exception no thrown.");
+        }
+        catch(GallowsException e) {
+            // Expected.
+        }
     }
 }
 

@@ -3,7 +3,7 @@ package com.swkoan.gallows.gt.data;
 import com.swkoan.gallows.config.DataSourceConfig;
 import com.swkoan.gallows.data.DataSourceFactory;
 import com.swkoan.gallows.data.LayerFactory;
-import com.swkoan.gallows.gt.data.jdbc.PostgisDSConfig;
+import com.swkoan.gallows.gt.data.jdbc.GTPostgisDSConfig;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class GTPostgisDataSourceFactory implements DataSourceFactory<DataStore> 
     @Override
     public DataStore createDataSource(DataSourceConfig dsConfig) {
         try {
-            PostgisDSConfig pgDsConfig = (PostgisDSConfig) dsConfig;
+            GTPostgisDSConfig pgDsConfig = (GTPostgisDSConfig) dsConfig;
             Map<String, Object> params = new HashMap<String, Object>();
             params.put(DB_TYPE, "postgis");
             params.put(HOST, pgDsConfig.getHost());
@@ -46,7 +46,7 @@ public class GTPostgisDataSourceFactory implements DataSourceFactory<DataStore> 
 
     @Override
     public String getDataSourceConfigClassname() {
-        return PostgisDSConfig.class.getName();
+        return GTPostgisDSConfig.class.getName();
     }
 
     @Override

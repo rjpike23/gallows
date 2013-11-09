@@ -5,7 +5,7 @@ import com.swkoan.gallows.config.DataSourceConfig;
 /**
  *
  */
-public class PostgisDSConfig implements DataSourceConfig {
+public class GTPostgisDSConfig implements DataSourceConfig {
 
     private String host;
     private Integer port;
@@ -16,10 +16,10 @@ public class PostgisDSConfig implements DataSourceConfig {
     private boolean looseBBox = true;
     private boolean preparedStatements = false;
 
-    public PostgisDSConfig() {
+    public GTPostgisDSConfig() {
     }
 
-    public PostgisDSConfig(String host, Integer port, String schema, String database, String user, String password) {
+    public GTPostgisDSConfig(String host, Integer port, String schema, String database, String user, String password) {
         this.host = host;
         this.port = port;
         this.schema = schema;

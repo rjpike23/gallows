@@ -6,6 +6,7 @@ import com.swkoan.gallows.config.FolderConfig;
 import com.swkoan.gallows.config.GallowsConfig;
 import com.swkoan.gallows.config.LayerConfig;
 import java.util.HashMap;
+import java.util.logging.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -16,6 +17,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class PojoGallowsConfig implements GallowsConfig, ApplicationContextAware {
 
+    private static final Logger LOG = Logger.getLogger(PojoGallowsConfig.class.getName());
     private String suppCtxFile = null;
     private ConfigStatus currentStatus = new ConfigStatus();
     private FolderConfig layerConfig;
@@ -24,9 +26,10 @@ public class PojoGallowsConfig implements GallowsConfig, ApplicationContextAware
 
     @Override
     public void load() {
+        LOG.info("Loading POJO GallowsConfig from Spring context.");
         currentStatus.loadSuccess();
         ApplicationContext configCtx = appCtx;
-        if(suppCtxFile != null) {
+        if (suppCtxFile != null) {
             configCtx = new ClassPathXmlApplicationContext(suppCtxFile);
         }
         layerConfig = ((LayerConfigContainer) configCtx.getBean("layerList")).getRootLayerConfig();
@@ -61,7 +64,7 @@ public class PojoGallowsConfig implements GallowsConfig, ApplicationContextAware
 
     @Override
     public DataSourceConfig getDataSourceConfigs() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

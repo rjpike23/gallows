@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.ws.rs.core.StreamingOutput;
 import net.opengis.wms.Capability;
@@ -42,6 +44,7 @@ import org.springframework.context.ApplicationContextAware;
  */
 public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, ApplicationContextAware {
 
+    private static final Logger LOG = Logger.getLogger(BufferedImageGetMapOp.class.getName());
     private static Set<String> supportedMimeTypes;
 
     static {
@@ -70,7 +73,8 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
             WMSRequest wmsReq = (WMSRequest) request;
             return WMSConstants.GET_MAP_OP.equals(wmsReq.getRequest())
                     && supportedMimeTypes.contains(wmsReq.getFormat());
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -80,13 +84,13 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
         try {
             WMSRequest wmsRequest = (WMSRequest) request;
             String crsParam = wmsRequest.getCrs();
-            if(crsParam == null) {
-                throw new WMSException("SRS parameter is required", "InvalidParameters");
+            if (crsParam == null) {
+                throw new WMSException("CRS parameter is required", "InvalidParameters");
             }
-            if(wmsRequest.getWidth() == null || wmsRequest.getHeight() == null) {
+            if (wmsRequest.getWidth() == null || wmsRequest.getHeight() == null) {
                 throw new WMSException("HEIGHT and WIDTH parameters are required.", "InvalidParameters");
             }
-            if(wmsRequest.getLayerNames() == null) {
+            if (wmsRequest.getLayerNames() == null) {
                 throw new WMSException("LAYERS parameter is required", "InvalidParameters");
             }
             Rectangle mapSize = new Rectangle(wmsRequest.getWidth(), wmsRequest.getHeight());
@@ -98,17 +102,18 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
             List<LayerConfig> layerConfigs = new ArrayList<LayerConfig>();
             for (String layerName : wmsRequest.getLayerNames()) {
                 LayerConfig lc = gc.getLayerConfig(layerName);
-                if(lc != null) {
+                if (lc != null) {
                     layerConfigs.add(lc);
                 }
                 else {
                     throw new WMSException(layerName, "LayerNotDefined");
                 }
             }
-            
             // TODO: using geotools CRS class, this code layer should not have
             // dependencies on non-standards based libraries.
             CoordinateReferenceSystem crs = CRS.decode(crsParam, false);
+            
+            LOG.info("WMS GetMap request validated, rendering...");
             MapDescription mapDescription = new MapDescription(
                     mapSize, layerConfigs, crs, wmsRequest.getBbox());
             BufferedImage image = new BufferedImage(
@@ -120,14 +125,16 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
             StreamingOutput output = new RenderedImageStreamingOutput(image, wmsRequest.getFormat());
             handler.setResult(output);
             handler.setResultMIMEType(wmsRequest.getFormat());
+            LOG.info("WMS GetMap request completed.");
         }
-        catch(FactoryException e) {
-            throw new WMSException("", "InvalidCRS", e);
+        catch (FactoryException e) {
+            throw new WMSException("The service does not support the specified CRS.", "InvalidCRS", e);
         }
-        catch(WMSException e) {
+        catch (WMSException e) {
             throw e;
         }
         catch (Exception e) {
+            LOG.log(Level.SEVERE, "Unexpected exception!", e);
             throw new WMSException("Unexpected error", null, e);
         }
     }

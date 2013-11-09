@@ -11,7 +11,7 @@
         <property name="layerFactory" ref="layerFactory"/>
     </bean>
   
-    <bean id="postgisConfig" class="com.swkoan.gallows.gt.data.jdbc.PostgisDSConfig">
+    <bean id="postgisConfig" class="com.swkoan.gallows.gt.data.jdbc.GTPostgisDSConfig">
         <property name="host" value="192.168.1.142"/>
         <property name="port" value="5432"/>
         <property name="database" value="gistestdb"/>

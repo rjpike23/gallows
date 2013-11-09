@@ -1,7 +1,7 @@
 package com.swkoan.gallows.gt.data;
 
 import com.swkoan.gallows.config.DataSourceConfig;
-import com.swkoan.gallows.gt.data.jdbc.PostgisDSConfig;
+import com.swkoan.gallows.gt.data.jdbc.GTPostgisDSConfig;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,7 +32,7 @@ public class GTPostgisDataSourceFactoryTest {
     @Test
     public void testCreateDS() {
         GTPostgisDataSourceFactory dsf = new GTPostgisDataSourceFactory();
-        DataSourceConfig dsCfg = new PostgisDSConfig("host", 1024, "schema", "db", "user", "pw");
+        DataSourceConfig dsCfg = new GTPostgisDSConfig("host", 1024, "schema", "db", "user", "pw");
         assertNotNull(dsf.createDataSource(dsCfg));
     }
 

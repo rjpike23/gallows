@@ -1,6 +1,7 @@
 package com.swkoan.gallows.gt.data;
 
 import com.swkoan.gallows.config.DataSourceConfig;
+import com.swkoan.gallows.config.GallowsException;
 import com.swkoan.gallows.config.LayerConfig;
 import com.swkoan.gallows.data.DataSourceFactory;
 import com.swkoan.gallows.data.LayerFactory;
@@ -53,13 +54,13 @@ public class GTLayerFactory implements LayerFactory<Layer, DataStore> {
                 return layer;
             }
             else {
-                //TODO: what to do here?
-                return null;
+                throw new GallowsException("Could not create data source for layer " 
+                        + layerConfig.getName());
             }
         }
         catch (IOException e) {
-            //TODO: what to do here?
-            return null;
+            throw new GallowsException("Error getting GeoTools feature source for layer " 
+                    + layerConfig.getName(), e);
         }
     }
 }

@@ -74,11 +74,13 @@ public class GTJDBCFolderConfig extends PojoFolderConfig implements FolderConfig
                 layerConfig.setBoundingBox(bboxes);
                 childLayers.add(layerConfig);
             }
-            ds.dispose();
             setChildren(childLayers);
         }
         catch(IOException e) {
             // TODO: What to do here?
+        }
+        finally {
+            ds.dispose();            
         }
     }
     

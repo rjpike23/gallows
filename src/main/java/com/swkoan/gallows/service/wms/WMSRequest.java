@@ -60,7 +60,7 @@ public class WMSRequest implements Request {
     }
 
     public String getCrs() {
-        return getParamValue(WMSConstants.SRS_PARAM);
+        return getParamValue(WMSConstants.CRS_PARAM);
     }
 
     public Envelope getBbox() {
@@ -136,5 +136,10 @@ public class WMSRequest implements Request {
         else {
             return null;
         }
+    }
+    
+    @Override
+    public String toString() {
+        return "WMSRequest: " + request + " v=" + version + ". Layers: " + this.getParamValue(WMSConstants.LAYERS_PARAM);
     }
 }

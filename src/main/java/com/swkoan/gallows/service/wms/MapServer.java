@@ -3,6 +3,8 @@ package com.swkoan.gallows.service.wms;
 import com.swkoan.gallows.service.JAXRSResponseHandler;
 import com.swkoan.gallows.service.OperationDispatcher;
 import com.swkoan.gallows.service.Request;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -19,6 +21,7 @@ import javax.ws.rs.core.UriInfo;
 @Path("WMS")
 public class MapServer {
 
+    private static final Logger LOG = Logger.getLogger(MapServer.class.getName());
     @Context
     private UriInfo context;
     @Context
@@ -33,7 +36,7 @@ public class MapServer {
     }
 
     /**
-     * 
+     *
      */
     @GET
     @Produces("application/xml")
@@ -44,6 +47,7 @@ public class MapServer {
         Request wmsRequest = new WMSRequest(context.getAbsolutePath().toString(),
                 secContext.getUserPrincipal(), request, version, format,
                 context.getQueryParameters());
+        LOG.log(Level.INFO, "WMS received: {0}", wmsRequest.toString());
         JAXRSResponseHandler responseHandler = new JAXRSResponseHandler();
         dispatcher.dispatch(wmsRequest, responseHandler);
         return responseHandler.getJAXRSResponse();

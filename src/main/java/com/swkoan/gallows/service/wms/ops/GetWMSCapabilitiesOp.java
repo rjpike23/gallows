@@ -4,7 +4,6 @@ import com.swkoan.gallows.service.wms.WMSLayerCapabilityProvider;
 import com.swkoan.gallows.config.ConfigStatus;
 import com.swkoan.gallows.config.FolderConfig;
 import com.swkoan.gallows.config.GallowsConfig;
-import com.swkoan.gallows.config.LayerConfig;
 import com.swkoan.gallows.service.Operation;
 import com.swkoan.gallows.service.Request;
 import com.swkoan.gallows.service.ResponseHandler;
@@ -12,6 +11,7 @@ import com.swkoan.gallows.service.wms.WMSCapabilityProvider;
 import com.swkoan.gallows.service.wms.WMSConstants;
 import com.swkoan.gallows.service.wms.WMSRequest;
 import java.util.Map;
+import java.util.logging.Logger;
 import net.opengis.wms.*;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -22,6 +22,7 @@ import org.springframework.context.ApplicationContextAware;
  */
 public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware, WMSCapabilityProvider {
 
+    private static final Logger LOG = Logger.getLogger(GetWMSCapabilitiesOp.class.getName());
     private ApplicationContext springCtx;
 
     @Override
@@ -44,6 +45,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
         caps.setCapability(getCapabilityMetadata(wmsRequest));
         handler.setResult(caps);
         handler.setResultMIMEType("text/xml");
+        LOG.info("WMS GetCapabilities request completed.");
     }
 
     private Service getServiceMetadata(WMSRequest request) {
@@ -68,7 +70,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
 
         // Layers:
         GallowsConfig gc = (GallowsConfig) springCtx.getBean("gallowsConfig");
-        if(gc.status().getCurrentState() != ConfigStatus.States.LOADED) {
+        if (gc.status().getCurrentState() != ConfigStatus.States.LOADED) {
             gc.load();
         }
         FolderConfig layerCfg = gc.getRootLayerConfig();

@@ -10,7 +10,7 @@ public interface WMSConstants {
     public static final String REQUEST_PARAM = "REQUEST";
     public static final String FORMAT_PARAM = "FORMAT";
     public static final String EXCEPTIONS_PARAM = "EXCEPTIONS";
-    public static final String SRS_PARAM = "CRS";
+    public static final String CRS_PARAM = "CRS";
     public static final String BBOX_PARAM = "BBOX";
     public static final String UPDATESEQUENCE_PARAM = "UPDATESEQUENCE";
     public static final String LAYERS_PARAM = "LAYERS";
