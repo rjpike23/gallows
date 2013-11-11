@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import org.geotools.data.DataStore;
-import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.map.Layer;
 import org.junit.After;
@@ -56,10 +55,10 @@ public class GTLayerFactoryTest {
     public void testDataStoreGood() {
         GTLayerFactory gtlf = new GTLayerFactory();
         DataSourceFactory dsfMock = mock(DataSourceFactory.class);
-        DataSourceConfig dsCfgMock = new MockDataSourceConfig();
+        GTDataSourceConfig dsCfgMock = new GTDataSourceConfig();
         when(dsfMock.createDataSource(dsCfgMock)).thenReturn(mock(DataStore.class));
         when(dsfMock.getDataSourceConfigClassname()).
-                thenReturn("com.swkoan.gallows.gt.data.MockDataSourceConfig");
+                thenReturn("com.swkoan.gallows.gt.data.GTDataSourceConfig");
         gtlf.registerDataSourceFactory(dsfMock);
         DataStore ds = gtlf.createDataSource(dsCfgMock);
         assertNotNull(ds);
@@ -69,7 +68,7 @@ public class GTLayerFactoryTest {
     public void testDataStoreBad() {
         GTLayerFactory gtlf = new GTLayerFactory();
         DataSourceFactory dsfMock = mock(DataSourceFactory.class);
-        DataSourceConfig dsCfgMock = new MockDataSourceConfig();
+        GTDataSourceConfig dsCfgMock = new GTDataSourceConfig();
         when(dsfMock.createDataSource(dsCfgMock)).thenReturn(mock(DataStore.class));
         when(dsfMock.getDataSourceConfigClassname()).
                 thenReturn("NonexistentClassName");
@@ -82,7 +81,7 @@ public class GTLayerFactoryTest {
     public void testCreateLayerGood() {
         GTLayerFactory gtlf = new GTLayerFactory();
         DataSourceFactory dsfMock = mock(DataSourceFactory.class);
-        DataSourceConfig dsCfgMock = new MockDataSourceConfig();
+        DataSourceConfig dsCfgMock = new GTDataSourceConfig();
         LayerConfig lCfgMock = mock(LayerConfig.class);
         DataStore gtDsMock = mock(DataStore.class);
         SimpleFeatureSource fsMock = mock(SimpleFeatureSource.class);
@@ -100,7 +99,7 @@ public class GTLayerFactoryTest {
         when(lCfgMock.getDataSourceConfig()).thenReturn(dsCfgMock);
         when(dsfMock.createDataSource(dsCfgMock)).thenReturn(gtDsMock);
         when(dsfMock.getDataSourceConfigClassname()).
-                thenReturn("com.swkoan.gallows.gt.data.MockDataSourceConfig");
+                thenReturn("com.swkoan.gallows.gt.data.GTDataSourceConfig");
         when(schemaMock.getGeometryDescriptor()).thenReturn(geomMock);
         when(geomMock.getType()).thenReturn(gTypeMock);
 
@@ -125,7 +124,7 @@ public class GTLayerFactoryTest {
     @Test
     public void testCreateLayerNoSuitableDSFactory() {
         DataSourceFactory dsfMock = mock(DataSourceFactory.class);
-        DataSourceConfig dsCfgMock = new MockDataSourceConfig();
+        DataSourceConfig dsCfgMock = new GTDataSourceConfig();
         LayerConfig lCfgMock = mock(LayerConfig.class);
         
         when(dsfMock.getDataSourceConfigClassname()).
@@ -142,9 +141,6 @@ public class GTLayerFactoryTest {
             // Expected.
         }
     }
-}
-
-class MockDataSourceConfig implements DataSourceConfig {
 }
 
 class MockGeometryType implements GeometryType {

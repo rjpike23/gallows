@@ -6,11 +6,11 @@ import com.swkoan.gallows.config.LayerConfig;
 /**
  *
  */
-public interface LayerFactory<T extends Object, U extends Object> {
+public interface LayerFactory<T extends Object, U extends Object, V extends DataSourceConfig> {
 
-    void registerDataSourceFactory(DataSourceFactory factory);
+    void registerDataSourceFactory(DataSourceFactory<U, V> factory);
     
-    U createDataSource(DataSourceConfig dsConfig);
+    U createDataSource(V dsConfig);
 
-    T createLayer(LayerConfig layerConfig);
+    T createLayer(LayerConfig<V> layerConfig);
 }

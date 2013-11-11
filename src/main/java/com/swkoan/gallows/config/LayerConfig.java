@@ -3,9 +3,9 @@ package com.swkoan.gallows.config;
 /**
  *
  */
-public interface LayerConfig extends FolderConfig {
+public interface LayerConfig<T extends DataSourceConfig> extends FolderConfig {
 
     String getName();
 
-    DataSourceConfig getDataSourceConfig();
+    T getDataSourceConfig();
 }

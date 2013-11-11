@@ -4,6 +4,7 @@ import com.swkoan.gallows.config.GallowsException;
 import com.swkoan.gallows.config.LayerConfig;
 import com.swkoan.gallows.data.LayerFactory;
 import com.swkoan.gallows.data.MapDescription;
+import com.swkoan.gallows.gt.data.GTDataSourceConfig;
 import com.swkoan.gallows.render.Renderer;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import org.geotools.renderer.lite.StreamingRenderer;
 public class GTStreamingRenderer implements Renderer {
 
     private static final Logger LOG = Logger.getLogger(GTStreamingRenderer.class.getName());
-    private LayerFactory<Layer, DataStore> layerFactory;
+    private LayerFactory<Layer, DataStore, GTDataSourceConfig> layerFactory;
 
     @Override
     public void render(MapDescription map, Graphics2D graphics) {

@@ -5,6 +5,7 @@ import com.swkoan.gallows.config.FolderConfig;
 import com.swkoan.gallows.config.pojo.PojoFolderConfig;
 import com.swkoan.gallows.config.pojo.PojoLayerConfig;
 import com.swkoan.gallows.data.LayerFactory;
+import com.swkoan.gallows.gt.data.GTDataSourceConfig;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,10 @@ import org.opengis.geometry.Envelope;
  *
  */
 public class GTJDBCFolderConfig extends PojoFolderConfig implements FolderConfig {
-    DataSourceConfig dsConfig;
-    LayerFactory<Layer, DataStore> layerFactory;
+    GTDataSourceConfig dsConfig;
+    LayerFactory<Layer, DataStore, GTDataSourceConfig> layerFactory;
 
-    public GTJDBCFolderConfig(DataSourceConfig dsConfig, LayerFactory<Layer, DataStore> layerFactory) {
+    public GTJDBCFolderConfig(GTDataSourceConfig dsConfig, LayerFactory<Layer, DataStore, GTDataSourceConfig> layerFactory) {
         this.dsConfig = dsConfig;
         this.layerFactory = layerFactory;
         update();
@@ -44,17 +45,17 @@ public class GTJDBCFolderConfig extends PojoFolderConfig implements FolderConfig
         return dsConfig;
     }
     
-    public void setDataSourceConfig(DataSourceConfig dsConfig) {
+    public void setDataSourceConfig(GTDataSourceConfig dsConfig) {
         this.dsConfig = dsConfig;
 
         update();
     }
 
-    public LayerFactory<Layer, DataStore> getLayerFactory() {
+    public LayerFactory<Layer, DataStore, GTDataSourceConfig> getLayerFactory() {
         return layerFactory;
     }
 
-    public void setLayerFactory(LayerFactory<Layer, DataStore> layerFactory) {
+    public void setLayerFactory(LayerFactory<Layer, DataStore, GTDataSourceConfig> layerFactory) {
         this.layerFactory = layerFactory;
         update();
     }

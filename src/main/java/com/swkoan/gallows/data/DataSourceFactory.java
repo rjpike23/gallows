@@ -5,11 +5,11 @@ import com.swkoan.gallows.config.DataSourceConfig;
 /**
  *
  */
-public interface DataSourceFactory<T extends Object> {
+public interface DataSourceFactory<T extends Object, U extends DataSourceConfig> {
     
     void setLayerFactory(LayerFactory layerFactory);
     
-    T createDataSource(DataSourceConfig dsConfig);
+    T createDataSource(U dsConfig);
 
     String getDataSourceConfigClassname();
 }

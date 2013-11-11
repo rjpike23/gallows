@@ -18,10 +18,10 @@ import org.geotools.styling.Style;
 /**
  *
  */
-public class GTLayerFactory implements LayerFactory<Layer, DataStore> {
+public class GTLayerFactory implements LayerFactory<Layer, DataStore, GTDataSourceConfig> {
 
-    private Map<String, DataSourceFactory<DataStore>> dsFactories =
-            new HashMap<String, DataSourceFactory<DataStore>>();
+    private Map<String, DataSourceFactory<DataStore, GTDataSourceConfig>> dsFactories =
+            new HashMap<String, DataSourceFactory<DataStore, GTDataSourceConfig>>();
 
     public GTLayerFactory() {
         System.getProperties().setProperty("org.geotools.referencing.forceXY", "true");
@@ -33,9 +33,9 @@ public class GTLayerFactory implements LayerFactory<Layer, DataStore> {
     }
 
     @Override
-    public DataStore createDataSource(DataSourceConfig dsCfg) {
+    public DataStore createDataSource(GTDataSourceConfig dsCfg) {
         DataStore store = null;
-        DataSourceFactory<DataStore> dsFactory = dsFactories.get(dsCfg.getClass().getName());
+        DataSourceFactory<DataStore, GTDataSourceConfig> dsFactory = dsFactories.get(dsCfg.getClass().getName());
         if (dsFactory != null) {
             store = dsFactory.createDataSource(dsCfg);
         }
@@ -43,9 +43,9 @@ public class GTLayerFactory implements LayerFactory<Layer, DataStore> {
     }
 
     @Override
-    public Layer createLayer(LayerConfig layerConfig) {
+    public Layer createLayer(LayerConfig<GTDataSourceConfig> layerConfig) {
         try {
-            DataSourceConfig dsCfg = layerConfig.getDataSourceConfig();
+            GTDataSourceConfig dsCfg = layerConfig.getDataSourceConfig();
             DataStore store = createDataSource(dsCfg);
             if (store != null) {
                 FeatureSource source = store.getFeatureSource(layerConfig.getName());
