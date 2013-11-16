@@ -1,6 +1,7 @@
 package com.swkoan.gallows.config.pojo;
 
 import com.swkoan.gallows.config.FolderConfig;
+import com.swkoan.gallows.config.StyleConfig;
 import com.swkoan.gallows.security.SecurityDescriptor;
 import java.math.BigInteger;
 import java.net.URL;
@@ -15,6 +16,7 @@ public class PojoFolderConfig implements FolderConfig {
 
     private FolderConfig parent;
     private List<FolderConfig> children;
+    private List<StyleConfig> styles;
     private String title;
     private String layerAbstract;
     private List<String> keywordList;
@@ -73,6 +75,15 @@ public class PojoFolderConfig implements FolderConfig {
 
     public void setChildren(List<FolderConfig> children) {
         this.children = children;
+    }
+
+    @Override
+    public List<StyleConfig> getStyles() {
+        return styles;
+    }
+
+    public void setStyles(List<StyleConfig> styles) {
+        this.styles = styles;
     }
 
     @Override

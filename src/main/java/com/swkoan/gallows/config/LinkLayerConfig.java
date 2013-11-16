@@ -23,6 +23,11 @@ public class LinkLayerConfig implements LayerConfig {
     }
 
     @Override
+    public List<StyleConfig> getStyles() {
+        return target.getStyles();
+    }
+
+    @Override
     public String getName() {
         return this.name;
     }

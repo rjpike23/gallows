@@ -1,10 +1,11 @@
-package com.swkoan.gallows.gt.data;
+package com.swkoan.gallows.gt.config;
 
 import com.swkoan.gallows.config.DataSourceConfig;
 import com.swkoan.gallows.config.GallowsException;
 import com.swkoan.gallows.config.LayerConfig;
 import com.swkoan.gallows.data.DataSourceFactory;
 import com.swkoan.gallows.data.LayerFactory;
+import com.swkoan.gallows.gt.data.GTDataSourceConfig;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

@@ -5,7 +5,11 @@ import com.swkoan.gallows.config.DataSourceConfig;
 import com.swkoan.gallows.config.FolderConfig;
 import com.swkoan.gallows.config.GallowsConfig;
 import com.swkoan.gallows.config.LayerConfig;
+import com.swkoan.gallows.config.StyleConfig;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.logging.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -21,6 +25,7 @@ public class PojoGallowsConfig implements GallowsConfig, ApplicationContextAware
     private String suppCtxFile = null;
     private ConfigStatus currentStatus = new ConfigStatus();
     private FolderConfig layerConfig;
+    private LinkedHashMap<String, StyleConfig> styleConfigs = new LinkedHashMap<String, StyleConfig>();
     private HashMap<String, LayerConfig> layerIndex = new HashMap<String, LayerConfig>();
     private ApplicationContext appCtx;
 
@@ -33,6 +38,7 @@ public class PojoGallowsConfig implements GallowsConfig, ApplicationContextAware
             configCtx = new ClassPathXmlApplicationContext(suppCtxFile);
         }
         layerConfig = ((LayerConfigContainer) configCtx.getBean("layerList")).getRootLayerConfig();
+        this.setStyleConfigs((List<StyleConfig>) configCtx.getBean("styles"));
         addToIndex(layerConfig);
     }
 
@@ -86,5 +92,25 @@ public class PojoGallowsConfig implements GallowsConfig, ApplicationContextAware
     @Override
     public void setApplicationContext(ApplicationContext ac) throws BeansException {
         this.appCtx = ac;
+    }
+
+    @Override
+    public List<StyleConfig> getStyleConfigs() {
+        List<StyleConfig> result = new ArrayList<StyleConfig>();
+        result.addAll(styleConfigs.values());
+        return result;
+    }
+    
+    public void setStyleConfigs(List<StyleConfig> styles) {
+        LinkedHashMap<String, StyleConfig> result = new LinkedHashMap<String, StyleConfig>();
+        for(StyleConfig style: styles) {
+            result.put(style.getName(), style);
+        }
+        this.styleConfigs = result;
+    }
+
+    @Override
+    public StyleConfig getStyleConfig(String name) {
+        return styleConfigs.get(name);
     }
 }

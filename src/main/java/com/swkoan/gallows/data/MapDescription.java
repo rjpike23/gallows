@@ -1,6 +1,7 @@
 package com.swkoan.gallows.data;
 
 import com.swkoan.gallows.config.LayerConfig;
+import com.swkoan.gallows.config.StyleConfig;
 import java.awt.Rectangle;
 import java.util.List;
 import org.opengis.geometry.Envelope;
@@ -13,10 +14,12 @@ public class MapDescription {
 
     private Rectangle imageDim;
     private List<LayerConfig> layers;
+    private List<StyleConfig> styles;
     private CoordinateReferenceSystem crs;
     private Envelope boundingBox;
     
-    public MapDescription(Rectangle imageDim, List<LayerConfig> layers, CoordinateReferenceSystem crs, Envelope boundingBox) {
+    public MapDescription(Rectangle imageDim, List<LayerConfig> layers,
+            List<StyleConfig> styles, CoordinateReferenceSystem crs, Envelope boundingBox) {
         this.imageDim = imageDim;
         this.layers = layers;
         this.crs = crs;
@@ -37,6 +40,14 @@ public class MapDescription {
 
     public void setLayers(List<LayerConfig> layers) {
         this.layers = layers;
+    }
+
+    public List<StyleConfig> getStyles() {
+        return styles;
+    }
+
+    public void setStyles(List<StyleConfig> styles) {
+        this.styles = styles;
     }
 
     public CoordinateReferenceSystem getCrs() {

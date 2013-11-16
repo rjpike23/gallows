@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
     <!-- Layer and data source factories -->
-    <bean id="layerFactory" class="com.swkoan.gallows.gt.data.GTLayerFactory"/>
+    <bean id="layerFactory" class="com.swkoan.gallows.gt.config.GTLayerFactory"/>
     <bean id="gtPGDSFactory" class="com.swkoan.gallows.gt.data.GTDataSourceFactory">
         <property name="layerFactory" ref="layerFactory"/>
     </bean>

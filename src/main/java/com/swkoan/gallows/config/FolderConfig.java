@@ -16,6 +16,8 @@ public interface FolderConfig {
     String getTitle();
 
     List<FolderConfig> getChildren();
+    
+    List<StyleConfig> getStyles();
 
     List<Envelope> getBoundingBox();
 

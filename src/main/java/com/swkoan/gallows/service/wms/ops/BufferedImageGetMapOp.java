@@ -3,6 +3,7 @@ package com.swkoan.gallows.service.wms.ops;
 import com.swkoan.gallows.config.ConfigStatus;
 import com.swkoan.gallows.config.GallowsConfig;
 import com.swkoan.gallows.config.LayerConfig;
+import com.swkoan.gallows.config.StyleConfig;
 import com.swkoan.gallows.data.MapDescription;
 import com.swkoan.gallows.render.Renderer;
 import com.swkoan.gallows.service.Operation;
@@ -99,6 +100,7 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
             if (gc.status().getCurrentState() != ConfigStatus.States.LOADED) {
                 gc.load();
             }
+            
             List<LayerConfig> layerConfigs = new ArrayList<LayerConfig>();
             for (String layerName : wmsRequest.getLayerNames()) {
                 LayerConfig lc = gc.getLayerConfig(layerName);
@@ -109,13 +111,30 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
                     throw new WMSException(layerName, "LayerNotDefined");
                 }
             }
+            
+            List<StyleConfig> styleConfigs = new ArrayList<StyleConfig>();
+            for(String styleName : wmsRequest.getStyleNames()) {
+                if("".equals(styleName)) {
+                    styleConfigs.add(null);
+                }
+                else {
+                    StyleConfig sc = gc.getStyleConfig(styleName);
+                    if(sc != null) {
+                        styleConfigs.add(sc);
+                    }
+                    else {
+                        throw new WMSException(styleName, "StyleNotDefined");
+                    }
+                }
+            }
+            
             // TODO: using geotools CRS class, this code layer should not have
             // dependencies on non-standards based libraries.
             CoordinateReferenceSystem crs = CRS.decode(crsParam, false);
             
             LOG.info("WMS GetMap request validated, rendering...");
             MapDescription mapDescription = new MapDescription(
-                    mapSize, layerConfigs, crs, wmsRequest.getBbox());
+                    mapSize, layerConfigs, styleConfigs, crs, wmsRequest.getBbox());
             BufferedImage image = new BufferedImage(
                     (int) mapDescription.getImageDim().getWidth(),
                     (int) mapDescription.getImageDim().getHeight(),

@@ -1,5 +1,6 @@
 package com.swkoan.gallows.gt.data;
 
+import com.swkoan.gallows.gt.config.GTLayerFactory;
 import com.swkoan.gallows.config.DataSourceConfig;
 import com.swkoan.gallows.config.GallowsException;
 import com.swkoan.gallows.config.LayerConfig;

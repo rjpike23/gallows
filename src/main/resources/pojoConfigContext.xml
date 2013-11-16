@@ -6,7 +6,7 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd" xmlns:aop="http://www.springframework.org/schema/aop">
 
     <!-- Layer and data source factories -->
-    <bean id="layerFactory" class="com.swkoan.gallows.gt.data.GTLayerFactory"/>
+    <bean id="layerFactory" class="com.swkoan.gallows.gt.config.GTLayerFactory"/>
     <bean id="gtPGDSFactory" class="com.swkoan.gallows.gt.data.GTDataSourceFactory">
         <property name="layerFactory" ref="layerFactory"/>
     </bean>
