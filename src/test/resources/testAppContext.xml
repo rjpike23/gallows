@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
                 
     <!-- List of operations provided by this server. -->
     <bean id="wmsGetCapabilitiesOp" class="com.swkoan.gallows.service.wms.ops.GetWMSCapabilitiesOp"/>
@@ -29,6 +31,18 @@
     
     <!-- The GallowsConfig object to be used for this server. -->
     <bean id="gallowsConfig" class="com.swkoan.gallows.config.pojo.PojoGallowsConfig"/>
+    
+    <util:list id="styles">
+        <bean class="com.swkoan.gallows.gt.config.GTStyleConfig">
+            <property name="name" value="Style1"/>
+            <property name="title" value="Style 1 Title"/>
+        </bean>
+        <bean class="com.swkoan.gallows.gt.config.GTStyleConfig">
+            <property name="name" value="Style2"/>
+            <property name="title" value="Style 2 Title"/>
+        </bean>
+    </util:list>
+    
     <bean id="layerList" class="com.swkoan.gallows.config.pojo.LayerConfigContainer">
         <property name="rootLayerConfig">
             <bean class="com.swkoan.gallows.config.pojo.PojoLayerConfig">

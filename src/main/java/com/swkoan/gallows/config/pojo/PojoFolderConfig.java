@@ -6,7 +6,9 @@ import com.swkoan.gallows.security.SecurityDescriptor;
 import java.math.BigInteger;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.opengis.geometry.Envelope;
 
 /**
@@ -17,6 +19,7 @@ public class PojoFolderConfig implements FolderConfig {
     private FolderConfig parent;
     private List<FolderConfig> children;
     private List<StyleConfig> styles;
+    private Map<String, StyleConfig> styleIndex;
     private String title;
     private String layerAbstract;
     private List<String> keywordList;
@@ -41,6 +44,7 @@ public class PojoFolderConfig implements FolderConfig {
 
     public PojoFolderConfig() {
         children = new ArrayList<FolderConfig>();
+        styles = new ArrayList<StyleConfig>();
         crs = new ArrayList<String>();
         boundingBox = new ArrayList<BoundingBox>();
     }
@@ -77,6 +81,7 @@ public class PojoFolderConfig implements FolderConfig {
         this.children = children;
     }
 
+    // TODO: probably should return immutable list.
     @Override
     public List<StyleConfig> getStyles() {
         return styles;
@@ -84,6 +89,19 @@ public class PojoFolderConfig implements FolderConfig {
 
     public void setStyles(List<StyleConfig> styles) {
         this.styles = styles;
+        styleIndex = new HashMap<String, StyleConfig>();
+        for(StyleConfig style: styles) {
+            styleIndex.put(style.getName(), style);
+        }
+    }
+
+    @Override
+    public StyleConfig getStyle(String name) {
+        StyleConfig result = styleIndex.get(name);
+        if(result == null && parent != null) {
+            result = parent.getStyle(name);
+        }
+        return result;
     }
 
     @Override

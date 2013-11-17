@@ -105,7 +105,7 @@ public class GTLayerFactoryTest {
         when(geomMock.getType()).thenReturn(gTypeMock);
 
         gtlf.registerDataSourceFactory(dsfMock);
-        Layer layer = gtlf.createLayer(lCfgMock);
+        Layer layer = gtlf.createLayer(lCfgMock, null);
         assertNotNull(layer);
     }
 
@@ -115,7 +115,7 @@ public class GTLayerFactoryTest {
         try {
             GTLayerFactory gtlf = new GTLayerFactory();
             gtlf.registerDataSourceFactory(dsfMock);
-            gtlf.createLayer(null);
+            gtlf.createLayer(null, null);
             fail("Expected a NPE.");
         } catch (NullPointerException e) {
             // expected.
@@ -135,7 +135,7 @@ public class GTLayerFactoryTest {
         GTLayerFactory gtlf = new GTLayerFactory();
         gtlf.registerDataSourceFactory(dsfMock);
         try {
-            Layer layer = gtlf.createLayer(lCfgMock);
+            Layer layer = gtlf.createLayer(lCfgMock, null);
             fail("Expected exception no thrown.");
         }
         catch(GallowsException e) {

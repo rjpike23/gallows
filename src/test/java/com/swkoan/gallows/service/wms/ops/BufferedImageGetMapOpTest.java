@@ -72,6 +72,7 @@ public class BufferedImageGetMapOpTest {
         params.add(WMSConstants.WIDTH_PARAM, "350");
         params.add(WMSConstants.CRS_PARAM, "epsg:4326");
         params.add(WMSConstants.LAYERS_PARAM, "Layer1");
+        params.add(WMSConstants.STYLES_PARAM, "");
         WMSRequest request = new WMSRequest("http://testvalue.com/", null,
                 WMSConstants.GET_MAP_OP, "1.3.0", "image/png", params);
 
@@ -90,18 +91,21 @@ public class BufferedImageGetMapOpTest {
         MultivaluedMap<String, String> params = new MVHashMap<String, String>();
         params.add(WMSConstants.CRS_PARAM, "epsg:4326");
         params.add(WMSConstants.LAYERS_PARAM, "Layer1");
+        params.add(WMSConstants.STYLES_PARAM, "");
         callExecuteWithInvalidParams(params, "InvalidParameters");
         
         params = new MVHashMap<String, String>();
         params.add(WMSConstants.HEIGHT_PARAM, "300");
         params.add(WMSConstants.CRS_PARAM, "epsg:4326");
         params.add(WMSConstants.LAYERS_PARAM, "Layer1");
+        params.add(WMSConstants.STYLES_PARAM, "");
         callExecuteWithInvalidParams(params, "InvalidParameters");
         
         params = new MVHashMap<String, String>();
         params.add(WMSConstants.WIDTH_PARAM, "350");
         params.add(WMSConstants.CRS_PARAM, "epsg:4326");
         params.add(WMSConstants.LAYERS_PARAM, "Layer1");
+        params.add(WMSConstants.STYLES_PARAM, "");
         callExecuteWithInvalidParams(params, "InvalidParameters");
     }
     
@@ -111,6 +115,7 @@ public class BufferedImageGetMapOpTest {
         params.add(WMSConstants.HEIGHT_PARAM, "300");
         params.add(WMSConstants.WIDTH_PARAM, "350");
         params.add(WMSConstants.LAYERS_PARAM, "Layer1");
+        params.add(WMSConstants.STYLES_PARAM, "");
         callExecuteWithInvalidParams(params, "InvalidParameters");
         
         params = new MVHashMap<String, String>();
@@ -118,6 +123,7 @@ public class BufferedImageGetMapOpTest {
         params.add(WMSConstants.WIDTH_PARAM, "350");
         params.add(WMSConstants.CRS_PARAM, "bleh");
         params.add(WMSConstants.LAYERS_PARAM, "Layer1");
+        params.add(WMSConstants.STYLES_PARAM, "");
         callExecuteWithInvalidParams(params, "InvalidCRS");
     }
 
@@ -127,6 +133,7 @@ public class BufferedImageGetMapOpTest {
         params.add(WMSConstants.HEIGHT_PARAM, "300");
         params.add(WMSConstants.WIDTH_PARAM, "350");
         params.add(WMSConstants.CRS_PARAM, "epsg:4326");
+        params.add(WMSConstants.STYLES_PARAM, "");
         callExecuteWithInvalidParams(params, "InvalidParameters");
         
         params = new MVHashMap<String, String>();
@@ -134,6 +141,7 @@ public class BufferedImageGetMapOpTest {
         params.add(WMSConstants.WIDTH_PARAM, "350");
         params.add(WMSConstants.CRS_PARAM, "epsg:4326");
         params.add(WMSConstants.LAYERS_PARAM, "bleh");
+        params.add(WMSConstants.STYLES_PARAM, "");
         callExecuteWithInvalidParams(params, "LayerNotDefined");
     }
 

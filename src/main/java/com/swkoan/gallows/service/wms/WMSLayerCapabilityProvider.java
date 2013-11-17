@@ -2,10 +2,12 @@ package com.swkoan.gallows.service.wms;
 
 import com.swkoan.gallows.config.FolderConfig;
 import com.swkoan.gallows.config.LayerConfig;
+import com.swkoan.gallows.config.StyleConfig;
 import java.util.Set;
 import net.opengis.wms.BoundingBox;
 import net.opengis.wms.EXGeographicBoundingBox;
 import net.opengis.wms.Layer;
+import net.opengis.wms.Style;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.geometry.Envelope;
 import org.opengis.referencing.ReferenceIdentifier;
@@ -51,6 +53,13 @@ public class WMSLayerCapabilityProvider {
                 }
             }
             layer.getBoundingBox().add(bb);
+        }
+        
+        for(StyleConfig styleCfg: layerConfig.getStyles()) {
+            Style style = new Style();
+            style.setName(styleCfg.getName());
+            style.setTitle(styleCfg.getTitle());
+            layer.getStyle().add(style);
         }
 
         if (layerConfig.getChildren() != null) {

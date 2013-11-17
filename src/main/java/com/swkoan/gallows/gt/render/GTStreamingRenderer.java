@@ -2,6 +2,7 @@ package com.swkoan.gallows.gt.render;
 
 import com.swkoan.gallows.config.GallowsException;
 import com.swkoan.gallows.config.LayerConfig;
+import com.swkoan.gallows.config.StyleConfig;
 import com.swkoan.gallows.data.LayerFactory;
 import com.swkoan.gallows.data.MapDescription;
 import com.swkoan.gallows.gt.data.GTDataSourceConfig;
@@ -44,9 +45,13 @@ public class GTStreamingRenderer implements Renderer {
         MapContent mapContent = new MapContent();
         mapContent.setViewport(mapViewport);
         List<Layer> gtLayers = new ArrayList<Layer>();
+        List<LayerConfig> layerCfgs = map.getLayers();
+        List<StyleConfig> styleCfgs = map.getStyles();
         try {
-            for (LayerConfig layerConfig : map.getLayers()) {
-                Layer layer = layerFactory.createLayer(layerConfig);
+            for (int i = 0; i < layerCfgs.size(); ++i) {
+                LayerConfig layerConfig = layerCfgs.get(i);
+                StyleConfig styleConfig = styleCfgs.get(i);
+                Layer layer = layerFactory.createLayer(layerConfig, styleConfig);
                 if (layer != null) {
                     gtLayers.add(layer);
                 }

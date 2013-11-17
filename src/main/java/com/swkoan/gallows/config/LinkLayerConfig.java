@@ -28,6 +28,11 @@ public class LinkLayerConfig implements LayerConfig {
     }
 
     @Override
+    public StyleConfig getStyle(String name) {
+        return target.getStyle(name);
+    }
+
+    @Override
     public String getName() {
         return this.name;
     }

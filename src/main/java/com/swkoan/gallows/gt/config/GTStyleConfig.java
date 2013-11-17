@@ -8,6 +8,7 @@ import com.swkoan.gallows.config.StyleConfig;
 public class GTStyleConfig implements StyleConfig {
 
     private String name;
+    private String title;
     private String sldUri;
 
     @Override
@@ -19,6 +20,15 @@ public class GTStyleConfig implements StyleConfig {
         this.name = name;
     }
 
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
     public String getSldUri() {
         return sldUri;
     }
@@ -26,4 +36,5 @@ public class GTStyleConfig implements StyleConfig {
     public void setSldUri(String sldUri) {
         this.sldUri = sldUri;
     }
+
 }

@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd" xmlns:aop="http://www.springframework.org/schema/aop">
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd"
+>
 
     <!-- Layer and data source factories -->
-    <bean id="layerFactory" class="com.swkoan.gallows.gt.config.GTLayerFactory"/>
+    <bean id="gtStyleFactory" class="com.swkoan.gallows.gt.config.GTStyleFactory"/>
+    <bean id="layerFactory" class="com.swkoan.gallows.gt.config.GTLayerFactory">
+        <property name="styleFactory" ref="gtStyleFactory"/>
+    </bean>
     <bean id="gtPGDSFactory" class="com.swkoan.gallows.gt.data.GTDataSourceFactory">
         <property name="layerFactory" ref="layerFactory"/>
     </bean>
@@ -31,11 +37,23 @@
         </constructor-arg>
     </bean>
     
+    <util:list id="styles">
+        <bean class="com.swkoan.gallows.gt.config.GTStyleConfig">
+            <property name="name" value="Style1"/>
+            <property name="title" value="Style 1 Title"/>
+        </bean>
+        <bean class="com.swkoan.gallows.gt.config.GTStyleConfig">
+            <property name="name" value="Style2"/>
+            <property name="title" value="Style 2 Title"/>
+        </bean>
+    </util:list>
+    
     <bean id="gtJdbcFolder" class="com.swkoan.gallows.gt.config.GTJDBCFolderConfig">
         <constructor-arg ref="postgisConfig"/>
         <constructor-arg ref="layerFactory"/>
         <property name="parent" ref="root"/>
         <property name="title" value="PostGIS Layers"/>
+        <property name="styles" ref="styles"/>
     </bean>
     
     <bean id="layerList" class="com.swkoan.gallows.config.pojo.LayerConfigContainer">

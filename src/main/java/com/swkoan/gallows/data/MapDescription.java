@@ -22,6 +22,7 @@ public class MapDescription {
             List<StyleConfig> styles, CoordinateReferenceSystem crs, Envelope boundingBox) {
         this.imageDim = imageDim;
         this.layers = layers;
+        this.styles = styles;
         this.crs = crs;
         this.boundingBox = boundingBox;
     }
@@ -65,6 +66,5 @@ public class MapDescription {
     public void setBoundingBox(Envelope boundingBox) {
         this.boundingBox = boundingBox;
     }
-    
 
 }

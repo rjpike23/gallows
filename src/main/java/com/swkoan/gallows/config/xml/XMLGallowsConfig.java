@@ -4,8 +4,6 @@ import com.swkoan.gallows.config.ConfigStatus;
 import com.swkoan.gallows.config.DataSourceConfig;
 import com.swkoan.gallows.config.GallowsConfig;
 import com.swkoan.gallows.config.LayerConfig;
-import com.swkoan.gallows.config.StyleConfig;
-import java.util.List;
 
 /**
  *
@@ -44,16 +42,6 @@ public class XMLGallowsConfig implements GallowsConfig {
 
     @Override
     public LayerConfig getLayerConfig(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<StyleConfig> getStyleConfigs() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public StyleConfig getStyleConfig(String name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
