@@ -15,6 +15,7 @@ import com.swkoan.gallows.service.wms.WMSCapabilityProvider;
 import com.swkoan.gallows.service.wms.WMSConstants;
 import com.swkoan.gallows.service.wms.WMSException;
 import com.swkoan.gallows.service.wms.WMSRequest;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -139,7 +140,14 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
                     (int) mapDescription.getImageDim().getWidth(),
                     (int) mapDescription.getImageDim().getHeight(),
                     BufferedImage.TYPE_4BYTE_ABGR);
-            renderer.render(mapDescription, ((Graphics2D) image.getGraphics()));
+            Graphics2D graphics = ((Graphics2D) image.getGraphics());
+            if(wmsRequest.getBackgroundColor() != null) {
+                int argb = Integer.decode(wmsRequest.getBackgroundColor());
+                Color color = new Color(argb, false);
+                graphics.setColor(color);
+                graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+            }
+            renderer.render(mapDescription, graphics);
 
             StreamingOutput output = new RenderedImageStreamingOutput(image, wmsRequest.getFormat());
             handler.setResult(output);

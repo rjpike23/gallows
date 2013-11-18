@@ -67,6 +67,7 @@ public class GTJDBCFolderConfig extends PojoFolderConfig implements FolderConfig
             String[] types = ds.getTypeNames();
             for(int i = 0; i < types.length; ++i) {
                 PojoLayerConfig layerConfig = new GTJDBCLayerConfig(types[i], types[i]);
+                layerConfig.setParent(this);
                 layerConfig.setDataSourceConfig(dsConfig);
                 Envelope bounds = ds.getFeatureSource(types[i]).getBounds();
                 layerConfig.setExGeographicBoundingBox(bounds);

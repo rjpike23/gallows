@@ -19,7 +19,7 @@ public class PojoFolderConfig implements FolderConfig {
     private FolderConfig parent;
     private List<FolderConfig> children;
     private List<StyleConfig> styles;
-    private Map<String, StyleConfig> styleIndex;
+    private Map<String, StyleConfig> styleIndex = new HashMap<String, StyleConfig>();
     private String title;
     private String layerAbstract;
     private List<String> keywordList;

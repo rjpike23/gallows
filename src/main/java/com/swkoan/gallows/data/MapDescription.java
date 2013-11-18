@@ -17,6 +17,7 @@ public class MapDescription {
     private List<StyleConfig> styles;
     private CoordinateReferenceSystem crs;
     private Envelope boundingBox;
+    private String backgroundColor;
     
     public MapDescription(Rectangle imageDim, List<LayerConfig> layers,
             List<StyleConfig> styles, CoordinateReferenceSystem crs, Envelope boundingBox) {
@@ -65,6 +66,14 @@ public class MapDescription {
 
     public void setBoundingBox(Envelope boundingBox) {
         this.boundingBox = boundingBox;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 
 }

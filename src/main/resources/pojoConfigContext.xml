@@ -39,8 +39,9 @@
     
     <util:list id="styles">
         <bean class="com.swkoan.gallows.gt.config.GTStyleConfig">
-            <property name="name" value="Style1"/>
-            <property name="title" value="Style 1 Title"/>
+            <property name="name" value="worldcountries"/>
+            <property name="title" value="World Country 7 Color Style"/>
+            <property name="sldUri" value="http://localhost:8080/gallows/styles/worldcountries.xml"/>
         </bean>
         <bean class="com.swkoan.gallows.gt.config.GTStyleConfig">
             <property name="name" value="Style2"/>

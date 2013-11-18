@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.ws.rs.core.MultivaluedMap;
-import net.opengis.wms.BoundingBox;
 import org.geotools.geometry.Envelope2D;
 import org.opengis.geometry.Envelope;
 

@@ -57,7 +57,7 @@ public class GTStreamingRenderer implements Renderer {
                 }
             }
             mapContent.addLayers(gtLayers);
-
+            
             // Render
             LOG.info("Calling GeoTools to render map.");
             StreamingRenderer gtRenderer = new StreamingRenderer();
