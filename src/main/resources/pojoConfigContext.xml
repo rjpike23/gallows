@@ -5,19 +5,12 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
-                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd"
->
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
     <!-- Layer and data source factories -->
-    <bean id="gtStyleFactory" class="com.swkoan.gallows.gt.config.GTStyleFactory"/>
-    <bean id="layerFactory" class="com.swkoan.gallows.gt.config.GTLayerFactory">
-        <property name="styleFactory" ref="gtStyleFactory"/>
-    </bean>
-    <bean id="gtPGDSFactory" class="com.swkoan.gallows.gt.data.GTDataSourceFactory">
-        <property name="layerFactory" ref="layerFactory"/>
-    </bean>
+    <bean id="gtPGDSFactory" class="com.swkoan.gallows.gt.config.factory.GTDataSourceFactory"/>
   
-    <bean id="postgisConfig" class="com.swkoan.gallows.gt.data.GTDataSourceConfig">
+    <bean id="postgisConfig" class="com.swkoan.gallows.gt.config.GTDataSourceDescriptor">
         <property name="params">
             <map>
                 <entry key="dbtype" value="postgis"/>
@@ -31,33 +24,33 @@
         </property>
     </bean>
     
-    <bean id="root" class="com.swkoan.gallows.config.pojo.PojoFolderConfig">
+    <bean id="root" class="com.swkoan.gallows.config.pojo.PojoFolderDescriptor">
         <constructor-arg>
             <value>Root Layer</value>
         </constructor-arg>
     </bean>
     
     <util:list id="styles">
-        <bean class="com.swkoan.gallows.gt.config.GTStyleConfig">
+        <bean class="com.swkoan.gallows.gt.config.GTStyleDescriptor">
             <property name="name" value="worldcountries"/>
             <property name="title" value="World Country 7 Color Style"/>
             <property name="sldUri" value="http://localhost:8080/gallows/styles/worldcountries.xml"/>
         </bean>
-        <bean class="com.swkoan.gallows.gt.config.GTStyleConfig">
+        <bean class="com.swkoan.gallows.gt.config.GTStyleDescriptor">
             <property name="name" value="Style2"/>
             <property name="title" value="Style 2 Title"/>
         </bean>
     </util:list>
     
-    <bean id="gtJdbcFolder" class="com.swkoan.gallows.gt.config.GTJDBCFolderConfig">
+    <bean id="gtJdbcFolder" class="com.swkoan.gallows.gt.config.GTFolderDescriptor">
         <constructor-arg ref="postgisConfig"/>
-        <constructor-arg ref="layerFactory"/>
+        <constructor-arg ref="gtPGDSFactory"/>
         <property name="parent" ref="root"/>
         <property name="title" value="PostGIS Layers"/>
         <property name="styles" ref="styles"/>
     </bean>
     
-    <bean id="layerList" class="com.swkoan.gallows.config.pojo.LayerConfigContainer">
+    <bean id="layerList" class="com.swkoan.gallows.config.pojo.LayerDescContainer">
         <property name="rootLayerConfig" ref="root"/>
     </bean>
 </beans>

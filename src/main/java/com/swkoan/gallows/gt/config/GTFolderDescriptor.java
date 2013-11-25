@@ -1,30 +1,28 @@
 package com.swkoan.gallows.gt.config;
 
-import com.swkoan.gallows.config.DataSourceConfig;
-import com.swkoan.gallows.config.FolderConfig;
-import com.swkoan.gallows.config.pojo.PojoFolderConfig;
-import com.swkoan.gallows.config.pojo.PojoLayerConfig;
-import com.swkoan.gallows.data.LayerFactory;
-import com.swkoan.gallows.gt.data.GTDataSourceConfig;
+import com.swkoan.gallows.config.DataSourceDescriptor;
+import com.swkoan.gallows.config.FolderDescriptor;
+import com.swkoan.gallows.config.factory.Factory;
+import com.swkoan.gallows.config.pojo.PojoFolderDescriptor;
+import com.swkoan.gallows.config.pojo.PojoLayerDescriptor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.geotools.data.DataStore;
-import org.geotools.map.Layer;
 import org.geotools.referencing.CRS;
 import org.opengis.geometry.Envelope;
 
 /**
  *
  */
-public class GTJDBCFolderConfig extends PojoFolderConfig implements FolderConfig {
-    GTDataSourceConfig dsConfig;
-    LayerFactory<Layer, DataStore, GTDataSourceConfig> layerFactory;
+public class GTFolderDescriptor extends PojoFolderDescriptor implements FolderDescriptor {
+    GTDataSourceDescriptor dsConfig;
+    Factory<DataStore, DataSourceDescriptor> dsFactory;
 
-    public GTJDBCFolderConfig(GTDataSourceConfig dsConfig, LayerFactory<Layer, DataStore, GTDataSourceConfig> layerFactory) {
+    public GTFolderDescriptor(GTDataSourceDescriptor dsConfig, Factory<DataStore, DataSourceDescriptor> layerFactory) {
         this.dsConfig = dsConfig;
-        this.layerFactory = layerFactory;
+        this.dsFactory = layerFactory;
         update();
     }
 
@@ -41,32 +39,32 @@ public class GTJDBCFolderConfig extends PojoFolderConfig implements FolderConfig
         return crs;
     }
 
-    public DataSourceConfig getDataSourceConfig() {
+    public DataSourceDescriptor getDataSourceConfig() {
         return dsConfig;
     }
     
-    public void setDataSourceConfig(GTDataSourceConfig dsConfig) {
+    public void setDataSourceConfig(GTDataSourceDescriptor dsConfig) {
         this.dsConfig = dsConfig;
 
         update();
     }
 
-    public LayerFactory<Layer, DataStore, GTDataSourceConfig> getLayerFactory() {
-        return layerFactory;
+    public Factory<DataStore, DataSourceDescriptor> getDsFactory() {
+        return dsFactory;
     }
 
-    public void setLayerFactory(LayerFactory<Layer, DataStore, GTDataSourceConfig> layerFactory) {
-        this.layerFactory = layerFactory;
+    public void setDsFactory(Factory<DataStore, DataSourceDescriptor> dsFactory) {
+        this.dsFactory = dsFactory;
         update();
     }
     
     private void update() {
-        List<FolderConfig> childLayers = new ArrayList<FolderConfig>();
-        DataStore ds = layerFactory.createDataSource(dsConfig);
+        List<FolderDescriptor> childLayers = new ArrayList<FolderDescriptor>();
+        DataStore ds = dsFactory.produce(dsConfig);
         try {
             String[] types = ds.getTypeNames();
             for(int i = 0; i < types.length; ++i) {
-                PojoLayerConfig layerConfig = new GTJDBCLayerConfig(types[i], types[i]);
+                PojoLayerDescriptor layerConfig = new GTLayerDescriptor(types[i], types[i]);
                 layerConfig.setParent(this);
                 layerConfig.setDataSourceConfig(dsConfig);
                 Envelope bounds = ds.getFeatureSource(types[i]).getBounds();

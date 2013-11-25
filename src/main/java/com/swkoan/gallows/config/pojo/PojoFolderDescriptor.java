@@ -1,7 +1,7 @@
 package com.swkoan.gallows.config.pojo;
 
-import com.swkoan.gallows.config.FolderConfig;
-import com.swkoan.gallows.config.StyleConfig;
+import com.swkoan.gallows.config.FolderDescriptor;
+import com.swkoan.gallows.config.StyleDescriptor;
 import com.swkoan.gallows.security.SecurityDescriptor;
 import java.math.BigInteger;
 import java.net.URL;
@@ -14,12 +14,12 @@ import org.opengis.geometry.Envelope;
 /**
  *
  */
-public class PojoFolderConfig implements FolderConfig {
+public class PojoFolderDescriptor implements FolderDescriptor {
 
-    private FolderConfig parent;
-    private List<FolderConfig> children;
-    private List<StyleConfig> styles;
-    private Map<String, StyleConfig> styleIndex = new HashMap<String, StyleConfig>();
+    private FolderDescriptor parent;
+    private List<FolderDescriptor> children;
+    private List<StyleDescriptor> styles;
+    private Map<String, StyleDescriptor> styleIndex = new HashMap<String, StyleDescriptor>();
     private String title;
     private String layerAbstract;
     private List<String> keywordList;
@@ -42,19 +42,19 @@ public class PojoFolderConfig implements FolderConfig {
     private BigInteger fixedWidth;
     private BigInteger fixedHeight;
 
-    public PojoFolderConfig() {
-        children = new ArrayList<FolderConfig>();
-        styles = new ArrayList<StyleConfig>();
+    public PojoFolderDescriptor() {
+        children = new ArrayList<FolderDescriptor>();
+        styles = new ArrayList<StyleDescriptor>();
         crs = new ArrayList<String>();
         boundingBox = new ArrayList<BoundingBox>();
     }
 
-    public PojoFolderConfig(String title) {
+    public PojoFolderDescriptor(String title) {
         this();
         this.title = title;
     }
 
-    public PojoFolderConfig(String title, List<String> crs, BoundingBox exGeographicBoundingBox, List<BoundingBox> boundingBox) {
+    public PojoFolderDescriptor(String title, List<String> crs, BoundingBox exGeographicBoundingBox, List<BoundingBox> boundingBox) {
         this();
         this.title = title;
         this.crs = crs;
@@ -63,41 +63,41 @@ public class PojoFolderConfig implements FolderConfig {
     }
 
     @Override
-    public FolderConfig getParent() {
+    public FolderDescriptor getParent() {
         return parent;
     }
 
-    public void setParent(FolderConfig parent) {
+    public void setParent(FolderDescriptor parent) {
         this.parent = parent;
         parent.getChildren().add(this);
     }
 
     @Override
-    public List<FolderConfig> getChildren() {
+    public List<FolderDescriptor> getChildren() {
         return children;
     }
 
-    public void setChildren(List<FolderConfig> children) {
+    public void setChildren(List<FolderDescriptor> children) {
         this.children = children;
     }
 
     // TODO: probably should return immutable list.
     @Override
-    public List<StyleConfig> getStyles() {
+    public List<StyleDescriptor> getStyles() {
         return styles;
     }
 
-    public void setStyles(List<StyleConfig> styles) {
+    public void setStyles(List<StyleDescriptor> styles) {
         this.styles = styles;
-        styleIndex = new HashMap<String, StyleConfig>();
-        for(StyleConfig style: styles) {
+        styleIndex = new HashMap<String, StyleDescriptor>();
+        for(StyleDescriptor style: styles) {
             styleIndex.put(style.getName(), style);
         }
     }
 
     @Override
-    public StyleConfig getStyle(String name) {
-        StyleConfig result = styleIndex.get(name);
+    public StyleDescriptor getStyle(String name) {
+        StyleDescriptor result = styleIndex.get(name);
         if(result == null && parent != null) {
             result = parent.getStyle(name);
         }

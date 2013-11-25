@@ -1,7 +1,6 @@
 package com.swkoan.gallows.render;
 
-import com.swkoan.gallows.data.LayerFactory;
-import com.swkoan.gallows.data.MapDescription;
+import com.swkoan.gallows.config.MapDescriptor;
 import java.awt.Graphics2D;
 
 /**
@@ -9,7 +8,5 @@ import java.awt.Graphics2D;
  */
 public interface Renderer {
 
-    void render(MapDescription map, Graphics2D graphics);
-    
-    void setLayerFactory(LayerFactory layerFactory);
+    void render(MapDescriptor map, Graphics2D graphics);
 }

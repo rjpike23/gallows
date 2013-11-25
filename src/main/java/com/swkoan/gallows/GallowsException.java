@@ -1,4 +1,4 @@
-package com.swkoan.gallows.config;
+package com.swkoan.gallows;
 
 /**
  *

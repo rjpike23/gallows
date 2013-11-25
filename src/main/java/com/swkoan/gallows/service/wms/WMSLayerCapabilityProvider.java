@@ -1,8 +1,8 @@
 package com.swkoan.gallows.service.wms;
 
-import com.swkoan.gallows.config.FolderConfig;
-import com.swkoan.gallows.config.LayerConfig;
-import com.swkoan.gallows.config.StyleConfig;
+import com.swkoan.gallows.config.FolderDescriptor;
+import com.swkoan.gallows.config.LayerDescriptor;
+import com.swkoan.gallows.config.StyleDescriptor;
 import java.util.Set;
 import net.opengis.wms.BoundingBox;
 import net.opengis.wms.EXGeographicBoundingBox;
@@ -17,11 +17,11 @@ import org.opengis.referencing.ReferenceIdentifier;
  */
 public class WMSLayerCapabilityProvider {
 
-    public Layer provide(FolderConfig layerConfig) {
+    public Layer provide(FolderDescriptor layerConfig) {
         Layer layer = new Layer();
 
-        if (layerConfig instanceof LayerConfig) {
-            layer.setName(((LayerConfig) layerConfig).getName());
+        if (layerConfig instanceof LayerDescriptor) {
+            layer.setName(((LayerDescriptor) layerConfig).getName());
         }
         layer.setTitle(layerConfig.getTitle());
         for (String crs : layerConfig.getCrs()) {
@@ -55,7 +55,7 @@ public class WMSLayerCapabilityProvider {
             layer.getBoundingBox().add(bb);
         }
         
-        for(StyleConfig styleCfg: layerConfig.getStyles()) {
+        for(StyleDescriptor styleCfg: layerConfig.getStyles()) {
             Style style = new Style();
             style.setName(styleCfg.getName());
             style.setTitle(styleCfg.getTitle());
@@ -63,7 +63,7 @@ public class WMSLayerCapabilityProvider {
         }
 
         if (layerConfig.getChildren() != null) {
-            for (FolderConfig child : layerConfig.getChildren()) {
+            for (FolderDescriptor child : layerConfig.getChildren()) {
                 layer.getLayer().add(provide(child));
             }
         }

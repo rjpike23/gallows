@@ -2,10 +2,11 @@ package com.swkoan.gallows.service.wms.ops;
 
 import com.swkoan.gallows.config.ConfigStatus;
 import com.swkoan.gallows.config.GallowsConfig;
-import com.swkoan.gallows.config.LayerConfig;
-import com.swkoan.gallows.config.StyleConfig;
-import com.swkoan.gallows.data.MapDescription;
-import com.swkoan.gallows.gt.config.GTStyleConfig;
+import com.swkoan.gallows.config.LayerDescriptor;
+import com.swkoan.gallows.config.RenderableLayerDescriptor;
+import com.swkoan.gallows.config.StyleDescriptor;
+import com.swkoan.gallows.config.pojo.PojoMapDescriptor;
+import com.swkoan.gallows.config.pojo.PojoRenderableLayerDescriptor;
 import com.swkoan.gallows.render.Renderer;
 import com.swkoan.gallows.service.Operation;
 import com.swkoan.gallows.service.RenderedImageStreamingOutput;
@@ -103,26 +104,25 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
                 gc.load();
             }
 
-            List<LayerConfig> layerConfigs = new ArrayList<LayerConfig>();
-            List<StyleConfig> styleConfigs = new ArrayList<StyleConfig>();
+            List<RenderableLayerDescriptor> layerConfigs = new ArrayList<RenderableLayerDescriptor>();
             List<String> layerNames = wmsRequest.getLayerNames();
             List<String> styleNames = wmsRequest.getStyleNames();
             for (int i = 0; i < layerNames.size(); ++i) {
                 String layerName = layerNames.get(i);
-                LayerConfig lc = gc.getLayerConfig(layerName);
-                if (lc != null) {
-                    layerConfigs.add(lc);
-                    StyleConfig style = null;
+                LayerDescriptor ld = gc.getLayerConfig(layerName);
+                if (ld != null) {
+                    StyleDescriptor style = null;
                     if(styleNames != null && styleNames.size() > i) {
                         String styleName = styleNames.get(i);
                         if(! "".equals(styleName.trim())) {
-                            style = lc.getStyle(styleName);
+                            style = ld.getStyle(styleName);
                             if(style == null) {
                                 throw new WMSException(styleName, "StyleNotDefined");
                             }
                         }
                     }
-                    styleConfigs.add(style);
+                    RenderableLayerDescriptor rld = new PojoRenderableLayerDescriptor(ld, style);
+                    layerConfigs.add(rld);
                 }
                 else {
                     throw new WMSException(layerName, "LayerNotDefined");
@@ -134,8 +134,8 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
             CoordinateReferenceSystem crs = CRS.decode(crsParam, false);
 
             LOG.info("WMS GetMap request validated, rendering...");
-            MapDescription mapDescription = new MapDescription(
-                    mapSize, layerConfigs, styleConfigs, crs, wmsRequest.getBbox());
+            PojoMapDescriptor mapDescription = new PojoMapDescriptor(
+                    mapSize, layerConfigs, crs, wmsRequest.getBbox());
             BufferedImage image = new BufferedImage(
                     (int) mapDescription.getImageDim().getWidth(),
                     (int) mapDescription.getImageDim().getHeight(),

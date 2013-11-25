@@ -3,7 +3,7 @@ package com.swkoan.gallows.config;
 /**
  *
  */
-public interface StyleConfig {
+public interface StyleDescriptor extends Descriptor {
 
     String getName();
     

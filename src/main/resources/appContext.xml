@@ -4,17 +4,19 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
     <!-- Layer and data source factories -->
-    <bean id="gtStyleFactory" class="com.swkoan.gallows.gt.config.GTStyleFactory"/>
-    <bean id="layerFactory" class="com.swkoan.gallows.gt.config.GTLayerFactory">
+    <bean id="gtStyleFactory" class="com.swkoan.gallows.gt.config.factory.GTStyleFactory"/>
+    <bean id="gtPGDSFactory" class="com.swkoan.gallows.gt.config.factory.GTDataSourceFactory"/>
+    <bean id="layerFactory" class="com.swkoan.gallows.gt.config.factory.GTLayerFactory">
         <property name="styleFactory" ref="gtStyleFactory"/>
+        <property name="dsFactory" ref="gtPGDSFactory"/>
     </bean>
-    <bean id="gtPGDSFactory" class="com.swkoan.gallows.gt.data.GTDataSourceFactory">
+    <bean id="gtMapFactory" class="com.swkoan.gallows.gt.config.factory.GTMapFactory">
         <property name="layerFactory" ref="layerFactory"/>
     </bean>
   
     <!-- Renderers -->
     <bean id="gtStreamingRenderer" class="com.swkoan.gallows.gt.render.GTStreamingRenderer">
-        <property name="layerFactory" ref="layerFactory"/>
+        <property name="mapFactory" ref="gtMapFactory"/>
     </bean>
     
     <!-- List of operations provided by this server. -->
@@ -26,7 +28,7 @@
     </bean>
 
     <!-- The GallowsConfig object to be used for this server. -->
-    <bean id="gallowsConfig" class="com.swkoan.gallows.config.pojo.PojoGallowsConfig">
+    <bean id="gallowsConfig" class="com.swkoan.gallows.config.pojo.PojoGallowsDescriptor">
         <property name="suppCtxFile" value="/pojoConfigContext.xml"/>
     </bean>
     

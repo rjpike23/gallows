@@ -1,11 +1,11 @@
 package com.swkoan.gallows.gt.config;
 
-import com.swkoan.gallows.config.StyleConfig;
+import com.swkoan.gallows.config.StyleDescriptor;
 
 /**
  *
  */
-public class GTStyleConfig implements StyleConfig {
+public class GTStyleDescriptor implements StyleDescriptor {
 
     private String name;
     private String title;

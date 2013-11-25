@@ -1,37 +1,37 @@
 package com.swkoan.gallows.config.pojo;
 
-import com.swkoan.gallows.config.DataSourceConfig;
-import com.swkoan.gallows.config.LayerConfig;
+import com.swkoan.gallows.config.DataSourceDescriptor;
+import com.swkoan.gallows.config.LayerDescriptor;
 import java.util.List;
 
 /**
  *
  */
-public class PojoLayerConfig extends PojoFolderConfig implements LayerConfig {
+public class PojoLayerDescriptor extends PojoFolderDescriptor implements LayerDescriptor {
 
-    private DataSourceConfig dataSourceConfig;
+    private DataSourceDescriptor dataSourceConfig;
     private String name;
 
-    public PojoLayerConfig() {
+    public PojoLayerDescriptor() {
     }
 
-    public PojoLayerConfig(String name, String title, List<String> crs,
+    public PojoLayerDescriptor(String name, String title, List<String> crs,
             BoundingBox exGeographicBoundingBox, List<BoundingBox> boundingBox) {
         super(title, crs, exGeographicBoundingBox, boundingBox);
         this.name = name;
     }
 
-    public PojoLayerConfig(String name, String title) {
+    public PojoLayerDescriptor(String name, String title) {
         super(title);
         this.name = name;
     }
     
     @Override
-    public DataSourceConfig getDataSourceConfig() {
+    public DataSourceDescriptor getDataSourceConfig() {
         return dataSourceConfig;
     }
     
-    public void setDataSourceConfig(DataSourceConfig dsConfig) {
+    public void setDataSourceConfig(DataSourceDescriptor dsConfig) {
         this.dataSourceConfig = dsConfig;
     }
     

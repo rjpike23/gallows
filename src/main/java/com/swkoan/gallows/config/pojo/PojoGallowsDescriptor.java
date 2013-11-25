@@ -1,10 +1,10 @@
 package com.swkoan.gallows.config.pojo;
 
 import com.swkoan.gallows.config.ConfigStatus;
-import com.swkoan.gallows.config.DataSourceConfig;
-import com.swkoan.gallows.config.FolderConfig;
+import com.swkoan.gallows.config.DataSourceDescriptor;
+import com.swkoan.gallows.config.FolderDescriptor;
 import com.swkoan.gallows.config.GallowsConfig;
-import com.swkoan.gallows.config.LayerConfig;
+import com.swkoan.gallows.config.LayerDescriptor;
 import java.util.HashMap;
 import java.util.logging.Logger;
 import org.springframework.beans.BeansException;
@@ -15,13 +15,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  *
  */
-public class PojoGallowsConfig implements GallowsConfig, ApplicationContextAware {
+public class PojoGallowsDescriptor implements GallowsConfig, ApplicationContextAware {
 
-    private static final Logger LOG = Logger.getLogger(PojoGallowsConfig.class.getName());
+    private static final Logger LOG = Logger.getLogger(PojoGallowsDescriptor.class.getName());
     private String suppCtxFile = null;
     private ConfigStatus currentStatus = new ConfigStatus();
-    private FolderConfig layerConfig;
-    private HashMap<String, LayerConfig> layerIndex = new HashMap<String, LayerConfig>();
+    private FolderDescriptor layerConfig;
+    private HashMap<String, LayerDescriptor> layerIndex = new HashMap<String, LayerDescriptor>();
     private ApplicationContext appCtx;
 
     @Override
@@ -32,7 +32,7 @@ public class PojoGallowsConfig implements GallowsConfig, ApplicationContextAware
         if (suppCtxFile != null) {
             configCtx = new ClassPathXmlApplicationContext(suppCtxFile);
         }
-        layerConfig = ((LayerConfigContainer) configCtx.getBean("layerList")).getRootLayerConfig();
+        layerConfig = ((LayerDescContainer) configCtx.getBean("layerList")).getRootLayerConfig();
         addToIndex(layerConfig);
     }
 
@@ -55,7 +55,7 @@ public class PojoGallowsConfig implements GallowsConfig, ApplicationContextAware
     }
 
     @Override
-    public FolderConfig getRootLayerConfig() {
+    public FolderDescriptor getRootLayerConfig() {
         if (currentStatus.getCurrentState() == ConfigStatus.States.INIT) {
             throw new IllegalStateException("Gallows configuration has not yet been loaded.");
         }
@@ -63,21 +63,21 @@ public class PojoGallowsConfig implements GallowsConfig, ApplicationContextAware
     }
 
     @Override
-    public DataSourceConfig getDataSourceConfigs() {
+    public DataSourceDescriptor getDataSourceConfigs() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public LayerConfig getLayerConfig(String name) {
+    public LayerDescriptor getLayerConfig(String name) {
         return layerIndex.get(name);
     }
 
-    private void addToIndex(FolderConfig layer) {
-        if (layer instanceof LayerConfig) {
-            layerIndex.put(((LayerConfig) layer).getName(), (LayerConfig) layer);
+    private void addToIndex(FolderDescriptor layer) {
+        if (layer instanceof LayerDescriptor) {
+            layerIndex.put(((LayerDescriptor) layer).getName(), (LayerDescriptor) layer);
         }
         if (layer.getChildren() != null && !layer.getChildren().isEmpty()) {
-            for (FolderConfig child : layer.getChildren()) {
+            for (FolderDescriptor child : layer.getChildren()) {
                 addToIndex(child);
             }
         }

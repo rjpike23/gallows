@@ -1,12 +1,9 @@
 package com.swkoan.gallows.gt.data;
 
-import com.swkoan.gallows.config.DataSourceConfig;
+import com.swkoan.gallows.gt.config.GTDataSourceDescriptor;
+import com.swkoan.gallows.gt.config.factory.GTDataSourceFactory;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -22,7 +19,7 @@ public class GTDataSourceFactoryTest {
     public void testCreateDSNull() {
         try {
             GTDataSourceFactory dsf = new GTDataSourceFactory();
-            dsf.createDataSource(null);
+            dsf.produce(null);
             fail("Expected NPE.");
         }
         catch(NullPointerException e) {
@@ -33,7 +30,7 @@ public class GTDataSourceFactoryTest {
     @Test
     public void testCreateDS() {
         GTDataSourceFactory dsf = new GTDataSourceFactory();
-        GTDataSourceConfig dsCfg = new GTDataSourceConfig();
+        GTDataSourceDescriptor dsCfg = new GTDataSourceDescriptor();
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("dbtype", "postgis");
         params.put("host", "host");
@@ -43,7 +40,7 @@ public class GTDataSourceFactoryTest {
         params.put("user", "user");
         params.put("password", "pw");
         dsCfg.setParams(params);
-        assertNotNull(dsf.createDataSource(dsCfg));
+        assertNotNull(dsf.produce(dsCfg));
     }
 
 }

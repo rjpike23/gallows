@@ -1,7 +1,7 @@
-package com.swkoan.gallows.data;
+package com.swkoan.gallows.config.pojo;
 
-import com.swkoan.gallows.config.LayerConfig;
-import com.swkoan.gallows.config.StyleConfig;
+import com.swkoan.gallows.config.MapDescriptor;
+import com.swkoan.gallows.config.RenderableLayerDescriptor;
 import java.awt.Rectangle;
 import java.util.List;
 import org.opengis.geometry.Envelope;
@@ -10,24 +10,23 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 /**
  *
  */
-public class MapDescription {
+public class PojoMapDescriptor implements MapDescriptor {
 
     private Rectangle imageDim;
-    private List<LayerConfig> layers;
-    private List<StyleConfig> styles;
+    private List<RenderableLayerDescriptor> layers;
     private CoordinateReferenceSystem crs;
     private Envelope boundingBox;
     private String backgroundColor;
     
-    public MapDescription(Rectangle imageDim, List<LayerConfig> layers,
-            List<StyleConfig> styles, CoordinateReferenceSystem crs, Envelope boundingBox) {
+    public PojoMapDescriptor(Rectangle imageDim, List<RenderableLayerDescriptor> layers,
+            CoordinateReferenceSystem crs, Envelope boundingBox) {
         this.imageDim = imageDim;
         this.layers = layers;
-        this.styles = styles;
         this.crs = crs;
         this.boundingBox = boundingBox;
     }
 
+    @Override
     public Rectangle getImageDim() {
         return imageDim;
     }
@@ -36,22 +35,16 @@ public class MapDescription {
         this.imageDim = imageDim;
     }
 
-    public List<LayerConfig> getLayers() {
+    @Override
+    public List<RenderableLayerDescriptor> getLayers() {
         return layers;
     }
 
-    public void setLayers(List<LayerConfig> layers) {
+    public void setLayers(List<RenderableLayerDescriptor> layers) {
         this.layers = layers;
     }
-
-    public List<StyleConfig> getStyles() {
-        return styles;
-    }
-
-    public void setStyles(List<StyleConfig> styles) {
-        this.styles = styles;
-    }
-
+    
+    @Override
     public CoordinateReferenceSystem getCrs() {
         return crs;
     }
@@ -60,6 +53,7 @@ public class MapDescription {
         this.crs = crs;
     }
 
+    @Override
     public Envelope getBoundingBox() {
         return boundingBox;
     }
@@ -68,6 +62,7 @@ public class MapDescription {
         this.boundingBox = boundingBox;
     }
 
+    @Override
     public String getBackgroundColor() {
         return backgroundColor;
     }

@@ -7,28 +7,28 @@ import org.opengis.geometry.Envelope;
 /**
  *
  */
-public class LinkLayerConfig implements LayerConfig {
+public class LinkDescriptor implements LayerDescriptor {
     String name;
     String title;
-    LayerConfig target;
+    LayerDescriptor target;
 
     @Override
-    public FolderConfig getParent() {
+    public FolderDescriptor getParent() {
         return target.getParent();
     }
 
     @Override
-    public List<FolderConfig> getChildren() {
+    public List<FolderDescriptor> getChildren() {
         return target.getChildren();
     }
 
     @Override
-    public List<StyleConfig> getStyles() {
+    public List<StyleDescriptor> getStyles() {
         return target.getStyles();
     }
 
     @Override
-    public StyleConfig getStyle(String name) {
+    public StyleDescriptor getStyle(String name) {
         return target.getStyle(name);
     }
 
@@ -58,7 +58,7 @@ public class LinkLayerConfig implements LayerConfig {
     }
 
     @Override
-    public DataSourceConfig getDataSourceConfig() {
+    public DataSourceDescriptor getDataSourceConfig() {
         return target.getDataSourceConfig();
     }
 

@@ -11,9 +11,9 @@ public interface GallowsConfig {
     
     ConfigStatus status();
 
-    FolderConfig getRootLayerConfig();
+    FolderDescriptor getRootLayerConfig();
     
-    LayerConfig getLayerConfig(String name);
+    LayerDescriptor getLayerConfig(String name);
     
-    DataSourceConfig getDataSourceConfigs();
+    DataSourceDescriptor getDataSourceConfigs();
 }

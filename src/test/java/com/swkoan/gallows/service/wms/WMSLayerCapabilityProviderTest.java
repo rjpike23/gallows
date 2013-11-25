@@ -1,8 +1,8 @@
 package com.swkoan.gallows.service.wms;
 
-import com.swkoan.gallows.config.LayerConfig;
+import com.swkoan.gallows.config.LayerDescriptor;
 import com.swkoan.gallows.config.pojo.BoundingBox;
-import com.swkoan.gallows.config.pojo.PojoLayerConfig;
+import com.swkoan.gallows.config.pojo.PojoLayerDescriptor;
 import java.util.Arrays;
 import java.util.Collections;
 import net.opengis.wms.EXGeographicBoundingBox;
@@ -22,7 +22,7 @@ public class WMSLayerCapabilityProviderTest {
     public void testProvide() {
         BoundingBox testBox = new BoundingBox(1.0, 2.0, 3.0, 4.0);
         WMSLayerCapabilityProvider provider = new WMSLayerCapabilityProvider();
-        LayerConfig lc = new PojoLayerConfig("Test.Layer", "Test Layer",
+        LayerDescriptor lc = new PojoLayerDescriptor("Test.Layer", "Test Layer",
                 Arrays.asList(new String[]{"CRS1"}),
                 testBox,
                 Collections.EMPTY_LIST);

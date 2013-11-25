@@ -7,19 +7,19 @@ import org.opengis.geometry.Envelope;
 /**
  *
  */
-public interface FolderConfig {
+public interface FolderDescriptor extends Descriptor {
 
     SecurityDescriptor getSecurityDescriptor();
     
-    FolderConfig getParent();
+    FolderDescriptor getParent();
 
     String getTitle();
 
-    List<FolderConfig> getChildren();
+    List<FolderDescriptor> getChildren();
     
-    List<StyleConfig> getStyles();
+    List<StyleDescriptor> getStyles();
     
-    StyleConfig getStyle(String name);
+    StyleDescriptor getStyle(String name);
 
     List<Envelope> getBoundingBox();
 

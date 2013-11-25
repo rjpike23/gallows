@@ -1,7 +1,7 @@
 package com.swkoan.gallows.config.pojo;
 
 import com.swkoan.gallows.config.ConfigStatus;
-import com.swkoan.gallows.config.FolderConfig;
+import com.swkoan.gallows.config.FolderDescriptor;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class PojoGallowsConfigTest {
 
     @Test
     public void testLoad() {
-        PojoGallowsConfig gc = (PojoGallowsConfig) appCtx.getBean("gallowsConfig");
+        PojoGallowsDescriptor gc = (PojoGallowsDescriptor) appCtx.getBean("gallowsConfig");
         assertTrue(gc.status().getCurrentState() == ConfigStatus.States.INIT);
         try {
             gc.getRootLayerConfig();
@@ -43,7 +43,7 @@ public class PojoGallowsConfigTest {
         }
         gc.load();
         assertTrue(gc.status().getCurrentState() == ConfigStatus.States.LOADED);
-        FolderConfig config = gc.getRootLayerConfig();
+        FolderDescriptor config = gc.getRootLayerConfig();
         assertNotNull(config);
     }
 }

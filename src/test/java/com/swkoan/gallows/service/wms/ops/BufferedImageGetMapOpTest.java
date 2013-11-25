@@ -1,6 +1,6 @@
 package com.swkoan.gallows.service.wms.ops;
 
-import com.swkoan.gallows.data.MapDescription;
+import com.swkoan.gallows.config.pojo.PojoMapDescriptor;
 import com.swkoan.gallows.render.Renderer;
 import com.swkoan.gallows.service.Operation;
 import com.swkoan.gallows.service.ResponseHandler;
@@ -82,7 +82,7 @@ public class BufferedImageGetMapOpTest {
 
         op.execute(request, handler);
 
-        verify(renderer).render(any(MapDescription.class), any(Graphics2D.class));
+        verify(renderer).render(any(PojoMapDescriptor.class), any(Graphics2D.class));
         verify(handler).setResultMIMEType("image/png");
     }
 

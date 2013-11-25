@@ -30,22 +30,22 @@
     </bean>
     
     <!-- The GallowsConfig object to be used for this server. -->
-    <bean id="gallowsConfig" class="com.swkoan.gallows.config.pojo.PojoGallowsConfig"/>
+    <bean id="gallowsConfig" class="com.swkoan.gallows.config.pojo.PojoGallowsDescriptor"/>
     
     <util:list id="styles">
-        <bean class="com.swkoan.gallows.gt.config.GTStyleConfig">
+        <bean class="com.swkoan.gallows.gt.config.GTStyleDescriptor">
             <property name="name" value="Style1"/>
             <property name="title" value="Style 1 Title"/>
         </bean>
-        <bean class="com.swkoan.gallows.gt.config.GTStyleConfig">
+        <bean class="com.swkoan.gallows.gt.config.GTStyleDescriptor">
             <property name="name" value="Style2"/>
             <property name="title" value="Style 2 Title"/>
         </bean>
     </util:list>
     
-    <bean id="layerList" class="com.swkoan.gallows.config.pojo.LayerConfigContainer">
+    <bean id="layerList" class="com.swkoan.gallows.config.pojo.LayerDescContainer">
         <property name="rootLayerConfig">
-            <bean class="com.swkoan.gallows.config.pojo.PojoLayerConfig">
+            <bean class="com.swkoan.gallows.config.pojo.PojoLayerDescriptor">
                 <constructor-arg>
                     <value>Layer1</value>
                 </constructor-arg>
