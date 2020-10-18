@@ -4,7 +4,7 @@ import com.swkoan.gallows.service.wms.WMSCapabilityProvider;
 import com.swkoan.gallows.service.wms.WMSException;
 import com.swkoan.gallows.service.wms.WMSRequest;
 import javax.ws.rs.core.Response;
-import net.opengis.wms.Capability;
+import net.opengis.wms.v_1_3_0.Capability;
 
 /**
  *
@@ -52,7 +52,7 @@ public class JAXRSResponseHandler implements ResponseHandler, WMSCapabilityProvi
     @Override
     public void provide(WMSRequest request, Capability cap) {
         if (cap.getException() == null) {
-            cap.setException(new net.opengis.wms.Exception());
+            cap.setException(new net.opengis.wms.v_1_3_0.Exception());
         }
         cap.getException().getFormat().add("XML");
     }

@@ -3,7 +3,7 @@ package com.swkoan.gallows.service.wms.ops;
 import com.swkoan.gallows.service.Operation;
 import com.swkoan.gallows.service.ResponseHandler;
 import com.swkoan.gallows.service.wms.WMSRequest;
-import net.opengis.wms.WMSCapabilities;
+import net.opengis.wms.v_1_3_0.WMSCapabilities;
 import org.junit.After;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

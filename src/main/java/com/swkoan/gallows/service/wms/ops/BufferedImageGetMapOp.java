@@ -29,14 +29,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.ws.rs.core.StreamingOutput;
-import net.opengis.wms.Capability;
-import net.opengis.wms.DCPType;
-import net.opengis.wms.Get;
-import net.opengis.wms.HTTP;
-import net.opengis.wms.OnlineResource;
-import net.opengis.wms.OperationType;
-import net.opengis.wms.Post;
+import net.opengis.wms.v_1_3_0.Capability;
+import net.opengis.wms.v_1_3_0.DCPType;
+import net.opengis.wms.v_1_3_0.Get;
+import net.opengis.wms.v_1_3_0.HTTP;
+import net.opengis.wms.v_1_3_0.OnlineResource;
+import net.opengis.wms.v_1_3_0.OperationType;
+import net.opengis.wms.v_1_3_0.Post;
 import org.geotools.referencing.CRS;
+import org.hisrc.w3c.xlink.v_1_0.TypeType;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.springframework.beans.BeansException;
@@ -169,7 +170,7 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
     @Override
     public void provide(WMSRequest request, Capability cap) {
         if (cap.getRequest() == null) {
-            cap.setRequest(new net.opengis.wms.Request());
+            cap.setRequest(new net.opengis.wms.v_1_3_0.Request());
         }
         if (cap.getRequest().getGetMap() == null) {
             cap.getRequest().setGetMap(new OperationType());
@@ -177,7 +178,7 @@ public class BufferedImageGetMapOp implements Operation, WMSCapabilityProvider, 
             HTTP http = new HTTP();
             Get get = new Get();
             OnlineResource or = new OnlineResource();
-            or.setType("simple");
+            or.setTYPE(TypeType.SIMPLE);
             or.setHref(request.getUrl());
             get.setOnlineResource(or);
             http.setGet(get);

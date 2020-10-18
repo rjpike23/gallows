@@ -1,6 +1,6 @@
 package com.swkoan.gallows.service.wms;
 
-import net.opengis.ogc.ServiceExceptionReport;
+import net.opengis.wms.v_1_3_0.exceptions.ServiceExceptionReport;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

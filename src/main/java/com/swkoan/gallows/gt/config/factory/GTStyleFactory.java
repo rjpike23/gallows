@@ -5,7 +5,7 @@ import com.swkoan.gallows.config.factory.Factory;
 import com.swkoan.gallows.gt.config.GTStyleDescriptor;
 import java.net.URL;
 import org.geotools.factory.CommonFactoryFinder;
-import org.geotools.styling.SLDParser;
+import org.geotools.xml.styling.SLDParser;
 import org.geotools.styling.Style;
 
 /**

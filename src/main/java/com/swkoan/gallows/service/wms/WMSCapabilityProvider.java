@@ -1,6 +1,6 @@
 package com.swkoan.gallows.service.wms;
 
-import net.opengis.wms.Capability;
+import net.opengis.wms.v_1_3_0.Capability;
 
 /**
  *

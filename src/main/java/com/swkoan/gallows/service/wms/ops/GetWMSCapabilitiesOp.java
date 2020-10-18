@@ -12,7 +12,8 @@ import com.swkoan.gallows.service.wms.WMSConstants;
 import com.swkoan.gallows.service.wms.WMSRequest;
 import java.util.Map;
 import java.util.logging.Logger;
-import net.opengis.wms.*;
+import net.opengis.wms.v_1_3_0.*;
+import org.hisrc.w3c.xlink.v_1_0.TypeType;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -40,7 +41,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
     public void execute(Request request, ResponseHandler handler) {
         WMSRequest wmsRequest = (WMSRequest) request;
         WMSCapabilities caps = new WMSCapabilities();
-        caps.setVersion("1.3.0");
+        //caps.setVersion("1.3.0");
         caps.setService(getServiceMetadata(wmsRequest));
         caps.setCapability(getCapabilityMetadata(wmsRequest));
         handler.setResult(caps);
@@ -87,7 +88,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
     @Override
     public void provide(WMSRequest request, Capability cap) {
         if (cap.getRequest() == null) {
-            cap.setRequest(new net.opengis.wms.Request());
+            cap.setRequest(new net.opengis.wms.v_1_3_0.Request());
         }
         // TODO: Check for existing operation type.
         OperationType opType = new OperationType();
@@ -95,7 +96,7 @@ public class GetWMSCapabilitiesOp implements Operation, ApplicationContextAware,
         HTTP http = new HTTP();
         Get get = new Get();
         OnlineResource or = new OnlineResource();
-        or.setType("simple");
+        or.setTYPE(TypeType.SIMPLE);
         or.setHref(request.getUrl());
         get.setOnlineResource(or);
         http.setGet(get);

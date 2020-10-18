@@ -5,8 +5,8 @@ import com.swkoan.gallows.config.pojo.BoundingBox;
 import com.swkoan.gallows.config.pojo.PojoLayerDescriptor;
 import java.util.Arrays;
 import java.util.Collections;
-import net.opengis.wms.EXGeographicBoundingBox;
-import net.opengis.wms.Layer;
+import net.opengis.wms.v_1_3_0.EXGeographicBoundingBox;
+import net.opengis.wms.v_1_3_0.Layer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

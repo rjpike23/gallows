@@ -2,9 +2,8 @@ package com.swkoan.gallows.service.wms;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import net.opengis.ogc.ServiceExceptionReport;
-import net.opengis.ogc.ServiceExceptionType;
-
+import net.opengis.wms.v_1_3_0.exceptions.ServiceExceptionReport;
+import net.opengis.wms.v_1_3_0.exceptions.ServiceExceptionType;
 /**
  *
  */
@@ -41,7 +40,7 @@ public class WMSException extends RuntimeException {
 
     public ServiceExceptionReport getWMSExceptionXML() {
         ServiceExceptionReport svcEx = new ServiceExceptionReport();
-        svcEx.setVersion("1.3.0");
+        //svcEx.setVersion("1.3.0");
         ServiceExceptionType svcExType = new ServiceExceptionType();
         svcExType.setCode(code);
         svcExType.setValue(this.getMessage());
